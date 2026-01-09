@@ -1,0 +1,448 @@
+/* ================================
+   RESET
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================================
+   BASE
+================================ */
+body {
+    background: #06141B;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* ================================
+   HELPERS
+================================ */
+.hidden {
+    display: none !important;
+}
+
+/* ================================
+   CLASS SELECT
+================================ */
+.class-select {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: linear-gradient(#06141B, #11212D);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.class-select h2 {
+    font-size: 28px;
+}
+
+.classes {
+    display: flex;
+    gap: 20px;
+}
+
+.classes button {
+    padding: 16px 26px;
+    font-size: 18px;
+    border-radius: 12px;
+    background: #253745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.classes button:hover {
+    background: #4a5c6a;
+    transform: scale(1.05);
+}
+
+/* ================================
+   CLASS PREVIEW
+================================ */
+.class-preview {
+    padding: 20px 30px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 14px;
+    text-align: center;
+    animation: fadeUp 0.25s ease;
+}
+
+.class-preview h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.class-preview p {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.class-preview .hint {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================================
+   GAME
+================================ */
+.game {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+/* ================================
+   SCENE (FOREST)
+================================ */
+.scene {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        to top,
+        #1b5e20 0%,
+        #2e7d32 40%,
+        #4caf50 100%
+    );
+}
+
+.scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(0,0,0,0.15) 0 50px,
+        transparent 50px 100px
+    );
+    opacity: 0.35;
+}
+
+.scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle,
+        rgba(255,255,255,0.15),
+        rgba(0,0,0,0.55)
+    );
+}
+
+/* ================================
+   HERO
+================================ */
+.hero {
+    position: absolute;
+    left: 60px;
+    bottom: 40px;
+    width: 70px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+/* head */
+.hero .head {
+    width: 34px;
+    height: 34px;
+    background: #f1c27d;
+    border-radius: 50%;
+    border: 2px solid #d8a46f;
+    margin-bottom: 4px;
+}
+
+/* torso */
+.hero .torso {
+    position: relative;
+    width: 46px;
+    height: 55px;
+    background: #3f51b5;
+    border-radius: 10px;
+    margin-bottom: 4px;
+}
+
+/* arms */
+.hero .arm {
+    position: absolute;
+    width: 12px;
+    height: 38px;
+    background: inherit;
+    top: 6px;
+    border-radius: 6px;
+}
+
+.hero .arm.left {
+    left: -10px;
+}
+
+.hero .arm.right {
+    right: -10px;
+    transform-origin: top;
+}
+
+/* sword */
+.hero .sword {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    width: 6px;
+    height: 32px;
+    background: #e0e0e0;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.hero .sword::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: -6px;
+    width: 18px;
+    height: 4px;
+    background: #9e9e9e;
+    border-radius: 2px;
+}
+
+/* legs */
+.hero .legs {
+    display: flex;
+    gap: 10px;
+}
+
+.hero .leg {
+    width: 14px;
+    height: 40px;
+    background: #2c3e50;
+    border-radius: 8px;
+}
+
+/* run */
+.hero.run .leg.left {
+    animation: runLeft 0.18s infinite alternate;
+}
+.hero.run .leg.right {
+    animation: runRight 0.18s infinite alternate;
+}
+
+@keyframes runLeft {
+    from { transform: rotate(10deg); }
+    to { transform: rotate(-10deg); }
+}
+@keyframes runRight {
+    from { transform: rotate(-10deg); }
+    to { transform: rotate(10deg); }
+}
+
+/* attack */
+.hero.attack .arm.right {
+    animation: swordHit 0.12s;
+}
+
+@keyframes swordHit {
+    0% { transform: rotate(0); }
+    50% { transform: rotate(-60deg); }
+    100% { transform: rotate(0); }
+}
+
+/* ================================
+   MONSTERS
+================================ */
+.monster {
+    position: absolute;
+    right: 80px;
+    bottom: 40px;
+    z-index: 2;
+}
+
+/* goblin */
+.monster.goblin {
+    width: 60px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.monster.goblin::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    background: #4caf50;
+    border-radius: 50%;
+    margin-bottom: 4px;
+}
+
+.monster.goblin::after {
+    content: "";
+    width: 45px;
+    height: 55px;
+    background: #2e7d32;
+    border-radius: 10px;
+}
+
+/* wolf */
+.monster.wolf {
+    width: 110px;
+    height: 50px;
+    background: #757575;
+    border-radius: 40px;
+}
+
+.monster.wolf::before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    background: #616161;
+    border-radius: 50%;
+    position: absolute;
+    left: -15px;
+    top: 10px;
+}
+
+.monster.wolf::after {
+    content: "";
+    width: 25px;
+    height: 10px;
+    background: #9e9e9e;
+    position: absolute;
+    right: -15px;
+    top: 20px;
+    border-radius: 10px;
+}
+
+/* monster attack */
+.monster.attack {
+    animation: monsterHit 0.12s;
+}
+
+@keyframes monsterHit {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-14px); }
+    100% { transform: translateX(0); }
+}
+
+/* ================================
+   UI
+================================ */
+.ui {
+    background: #11212D;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.ui button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ui button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* record */
+.record {
+    position: absolute;
+    right: 20px;
+    color: #ffd54f;
+    font-weight: bold;
+}
+
+/* ================================
+   LOG
+================================ */
+.log {
+    background: #000;
+    padding: 10px;
+    height: 140px;
+    overflow-y: auto;
+    font-size: 14px;
+}
+
+/* ================================
+   MOBILE ADAPTATION
+================================ */
+@media (max-width: 768px) {
+
+    .classes {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .classes button {
+        width: 220px;
+    }
+
+    .class-preview {
+        width: 90%;
+    }
+
+    .scene {
+        min-height: 55vh;
+    }
+
+    .hero {
+        left: 20px;
+        transform: scale(0.85);
+        transform-origin: bottom left;
+    }
+
+    .monster {
+        right: 20px;
+        transform: scale(0.85);
+        transform-origin: bottom right;
+    }
+
+    .ui {
+        flex-wrap: wrap;
+    }
+
+    .ui button {
+        flex: 1 1 45%;
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    .record {
+        position: static;
+        width: 100%;
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    .log {
+        height: 160px;
+        font-size: 13px;
+    }
+}

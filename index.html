@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Jungle RPG</title>
+
+    <!-- Mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================================
+     CLASS SELECTION SCREEN
+================================ -->
+<div class="class-select" id="classSelect">
+    <h2>Выбери класс</h2>
+
+    <div class="classes">
+        <button data-class="warrior">⚔️ Воин</button>
+        <button data-class="mage">🧙 Маг</button>
+        <button data-class="archer">🏹 Лучник</button>
+    </div>
+
+    <!-- Class preview (1st click) -->
+    <div class="class-preview hidden" id="classPreview">
+        <h3 id="previewName"></h3>
+        <p id="previewHp"></p>
+        <p id="previewDmg"></p>
+        <p class="hint">Нажми ещё раз, чтобы выбрать</p>
+    </div>
+</div>
+
+<!-- ================================
+     GAME
+================================ -->
+<div class="game hidden" id="game">
+
+    <!-- SCENE -->
+    <div class="scene">
+
+        <!-- HERO -->
+        <div class="hero idle" id="hero">
+            <div class="head"></div>
+
+            <div class="torso">
+                <div class="arm left"></div>
+                <div class="arm right">
+                    <div class="sword"></div>
+                </div>
+            </div>
+
+            <div class="legs">
+                <div class="leg left"></div>
+                <div class="leg right"></div>
+            </div>
+        </div>
+
+        <!-- MONSTER -->
+        <div class="monster hidden" id="monster"></div>
+
+    </div>
+
+    <!-- UI -->
+    <div class="ui">
+        <button id="fightBtn">⚔️ В БОЙ</button>
+        <button id="reviveBtn" class="hidden">🔁 Возродиться</button>
+        <button disabled>🎒 Инвентарь</button>
+
+        <div class="record" id="record">
+            🏆 Рекорд: 0
+        </div>
+    </div>
+
+    <!-- LOG -->
+    <div class="log" id="log"></div>
+
+</div>
+
+<!-- Script -->
+<script src="js/game.js"></script>
+
+</body>
+</html>
