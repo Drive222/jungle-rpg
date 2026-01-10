@@ -30,21 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
             hp: 120,
             minDamage: 35,
             maxDamage: 50,
-            color: "#3f51b5"
+            spriteIdle: "assets/heroes/warrior/idle.png",
+            spriteAttack: "assets/heroes/warrior/attack.png"
         },
         mage: {
             name: "🧙 Маг",
             hp: 90,
             minDamage: 45,
             maxDamage: 65,
-            color: "#8e24aa"
+            spriteIdle: "assets/heroes/mage/idle.png",
+            spriteAttack: "assets/heroes/mage/attack.png"
         },
         archer: {
-            name: "🏹 Лучник",
+            name: "🏹 Лучница",
             hp: 100,
             minDamage: 40,
             maxDamage: 60,
-            color: "#2e7d32"
+            spriteIdle: "assets/heroes/archer/idle.png",
+            spriteAttack: "assets/heroes/archer/attack.png"
         }
     };
 
@@ -82,14 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let monsterHp = 0;
     let monsterCount = 0;
     let fighting = false;
-
     let selectedClassKey = null;
 
     /* ================================
-       RECORD (localStorage)
+       RECORD
     ================================ */
-    let bestScore = localStorage.getItem("bestScore");
-    bestScore = bestScore ? Number(bestScore) : 0;
+    let bestScore = Number(localStorage.getItem("bestScore") || 0);
     recordEl.textContent = `🏆 Рекорд: ${bestScore}`;
 
     /* ================================
@@ -99,24 +100,44 @@ document.addEventListener("DOMContentLoaded", () => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    /**
+     * ⭐ ЖЁСТКО ОГРАНИЧЕННЫЙ СКРОЛЛ ЛОГА
+     * ЛОГ НИКОГДА НЕ ДОЕЗЖАЕТ ДО НИЗА
+     * последняя строка всегда полностью видна
+     */
     function writeLog(text) {
-        log.innerHTML += text + "<br>";
-        log.scrollTop = log.scrollHeight;
+    const prevScrollTop = log.scrollTop;
+    const prevScrollHeight = log.scrollHeight;
+
+    log.innerHTML += text + "<br>";
+
+    const lineHeight = 18; // под твой font-size
+    const maxAllowedScroll =
+        log.scrollHeight - log.clientHeight - lineHeight;
+
+    // если мы были выше "безопасной зоны" — скроллим
+    if (prevScrollTop < maxAllowedScroll) {
+        log.scrollTop = prevScrollTop + (log.scrollHeight - prevScrollHeight);
+    } else {
+        // иначе ЖЁСТКО держим на безопасной границе
+        log.scrollTop = maxAllowedScroll;
     }
+}
+
+
 
     function getRandomMonsterType() {
         return Math.random() < MONSTERS.goblin.chance ? "goblin" : "wolf";
     }
 
     /* ================================
-       CLASS SELECTION (2 CLICKS)
+       CLASS SELECTION
     ================================ */
     document.querySelectorAll(".classes button").forEach(btn => {
         btn.addEventListener("click", () => {
             const classKey = btn.dataset.class;
             const data = HERO_CLASSES[classKey];
 
-            // 1-й клик — показать статы
             if (selectedClassKey !== classKey) {
                 selectedClassKey = classKey;
 
@@ -129,15 +150,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // 2-й клик — подтверждение выбора
             heroClass = data;
             heroMaxHp = data.hp;
             heroHp = heroMaxHp;
             heroMinDmg = data.minDamage;
             heroMaxDmg = data.maxDamage;
 
-            document.querySelector(".hero .torso").style.background =
-                data.color;
+            hero.style.backgroundImage = `url(${data.spriteIdle})`;
+            hero.className = "hero idle";
 
             classSelect.style.display = "none";
             game.classList.remove("hidden");
@@ -148,26 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ================================
-       FIGHT BUTTON
+       FIGHT
     ================================ */
     fightBtn.addEventListener("click", () => {
         if (fighting || heroHp <= 0) return;
 
         fighting = true;
         fightBtn.disabled = true;
-
-        writeLog("🌲 Герой движется вперёд...");
-        hero.classList.add("run");
-
-        setTimeout(() => {
-            hero.classList.remove("run");
-            spawnMonster();
-        }, 350);
+        spawnMonster();
     });
 
-    /* ================================
-       SPAWN MONSTER
-    ================================ */
     function spawnMonster() {
         monsterCount++;
 
@@ -186,9 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
         battleTurn(type, data);
     }
 
-    /* ================================
-       BATTLE LOOP
-    ================================ */
     function battleTurn(type, data) {
         if (heroHp <= 0) {
             die();
@@ -206,21 +213,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Атака героя
         hero.classList.add("attack");
+        hero.style.backgroundImage = `url(${heroClass.spriteAttack})`;
+
         const heroDmg = random(heroMinDmg, heroMaxDmg);
         monsterHp -= heroDmg;
         writeLog(`⚔️ Герой ударил (-${heroDmg})`);
 
         setTimeout(() => {
             hero.classList.remove("attack");
+            hero.style.backgroundImage = `url(${heroClass.spriteIdle})`;
 
             if (monsterHp <= 0) {
                 battleTurn(type, data);
                 return;
             }
 
-            // Атака монстра
             monster.classList.add("attack");
             const monsterDmg = random(
                 data.minAttack,
@@ -231,15 +239,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => {
                 monster.classList.remove("attack");
-                setTimeout(() => battleTurn(type, data), 140);
-            }, 80);
+                setTimeout(() => battleTurn(type, data), 160);
+            }, 120);
 
-        }, 80);
+        }, 600);
     }
 
-    /* ================================
-       DEATH & RECORD
-    ================================ */
     function die() {
         monster.classList.add("hidden");
 
@@ -260,9 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
         fighting = false;
     }
 
-    /* ================================
-       REVIVE
-    ================================ */
     reviveBtn.addEventListener("click", () => {
         heroHp = heroMaxHp;
         monsterCount = 0;

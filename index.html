@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+<div class="game-title">
+    Grimwood
+</div>
 <!-- ================================
      CLASS SELECTION SCREEN
 ================================ -->
@@ -21,7 +23,7 @@
     <div class="classes">
         <button data-class="warrior">⚔️ Воин</button>
         <button data-class="mage">🧙 Маг</button>
-        <button data-class="archer">🏹 Лучник</button>
+        <button data-class="archer">🏹 Лучница</button>
     </div>
 
     <!-- Class preview (1st click) -->
@@ -42,21 +44,7 @@
     <div class="scene">
 
         <!-- HERO -->
-        <div class="hero idle" id="hero">
-            <div class="head"></div>
-
-            <div class="torso">
-                <div class="arm left"></div>
-                <div class="arm right">
-                    <div class="sword"></div>
-                </div>
-            </div>
-
-            <div class="legs">
-                <div class="leg left"></div>
-                <div class="leg right"></div>
-            </div>
-        </div>
+        <div class="hero idle" id="hero"></div>
 
         <!-- MONSTER -->
         <div class="monster hidden" id="monster"></div>
