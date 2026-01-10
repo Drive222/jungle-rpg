@@ -124,8 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 }
 
-
-
     function getRandomMonsterType() {
         return Math.random() < MONSTERS.goblin.chance ? "goblin" : "wolf";
     }
@@ -242,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => battleTurn(type, data), 160);
             }, 120);
 
-        }, 600);
+        }, 500);
     }
 
     function die() {
