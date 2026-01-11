@@ -61,7 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
             hpGrowth: 10,
             minAttack: 18,
             maxAttack: 28,
-            chance: 0.6
+            chance: 0.6,
+            spriteIdle: "assets/monsters/goblin/idle.png",
+            spriteAttack: "assets/monsters/goblin/attack.png",
+            width: 64,
+            height: 64
         },
         wolf: {
             name: "🐺 Волк",
@@ -69,7 +73,11 @@ document.addEventListener("DOMContentLoaded", () => {
             hpGrowth: 15,
             minAttack: 28,
             maxAttack: 42,
-            chance: 0.4
+            chance: 0.4,
+            spriteIdle: "assets/monsters/wolf/idle.png",
+            spriteAttack: "assets/monsters/wolf/attack.png",
+            width: 96,
+            height: 48
         }
     };
 
@@ -100,29 +108,24 @@ document.addEventListener("DOMContentLoaded", () => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    /**
-     * ⭐ ЖЁСТКО ОГРАНИЧЕННЫЙ СКРОЛЛ ЛОГА
-     * ЛОГ НИКОГДА НЕ ДОЕЗЖАЕТ ДО НИЗА
-     * последняя строка всегда полностью видна
-     */
+    // ⭐ лог со стопом перед нижней границей
     function writeLog(text) {
-    const prevScrollTop = log.scrollTop;
-    const prevScrollHeight = log.scrollHeight;
+        const prevScrollTop = log.scrollTop;
+        const prevScrollHeight = log.scrollHeight;
 
-    log.innerHTML += text + "<br>";
+        log.innerHTML += text + "<br>";
 
-    const lineHeight = 18; // под твой font-size
-    const maxAllowedScroll =
-        log.scrollHeight - log.clientHeight - lineHeight;
+        const lineHeight = 18;
+        const maxAllowedScroll =
+            log.scrollHeight - log.clientHeight - lineHeight;
 
-    // если мы были выше "безопасной зоны" — скроллим
-    if (prevScrollTop < maxAllowedScroll) {
-        log.scrollTop = prevScrollTop + (log.scrollHeight - prevScrollHeight);
-    } else {
-        // иначе ЖЁСТКО держим на безопасной границе
-        log.scrollTop = maxAllowedScroll;
+        if (prevScrollTop < maxAllowedScroll) {
+            log.scrollTop =
+                prevScrollTop + (log.scrollHeight - prevScrollHeight);
+        } else {
+            log.scrollTop = maxAllowedScroll;
+        }
     }
-}
 
     function getRandomMonsterType() {
         return Math.random() < MONSTERS.goblin.chance ? "goblin" : "wolf";
@@ -154,8 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
             heroMinDmg = data.minDamage;
             heroMaxDmg = data.maxDamage;
 
-            hero.style.backgroundImage = `url(${data.spriteIdle})`;
             hero.className = "hero idle";
+            hero.style.backgroundImage = `url(${data.spriteIdle})`;
 
             classSelect.style.display = "none";
             game.classList.remove("hidden");
@@ -170,12 +173,14 @@ document.addEventListener("DOMContentLoaded", () => {
     ================================ */
     fightBtn.addEventListener("click", () => {
         if (fighting || heroHp <= 0) return;
-
         fighting = true;
         fightBtn.disabled = true;
         spawnMonster();
     });
 
+    /* ================================
+       SPAWN MONSTER
+    ================================ */
     function spawnMonster() {
         monsterCount++;
 
@@ -187,13 +192,20 @@ document.addEventListener("DOMContentLoaded", () => {
             random(0, data.hpGrowth) +
             monsterCount * 3;
 
-        monster.className = `monster ${type}`;
+        monster.className = "monster";
+        monster.style.width = data.width + "px";
+        monster.style.height = data.height + "px";
+        monster.style.backgroundImage = `url(${data.spriteIdle})`;
+        monster.style.backgroundPosition = "0 0";
         monster.classList.remove("hidden");
 
         writeLog(`${data.name} №${monsterCount} выходит из леса!`);
         battleTurn(type, data);
     }
 
+    /* ================================
+       BATTLE LOOP
+    ================================ */
     function battleTurn(type, data) {
         if (heroHp <= 0) {
             die();
@@ -211,6 +223,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        /* HERO ATTACK */
+        hero.classList.remove("attack");
+        hero.style.backgroundPosition = "0 0";
+        void hero.offsetWidth; // перезапуск анимации
         hero.classList.add("attack");
         hero.style.backgroundImage = `url(${heroClass.spriteAttack})`;
 
@@ -227,27 +243,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            /* MONSTER ATTACK */
+            monster.classList.remove("attack");
+            monster.style.backgroundPosition = "0 0";
+            void monster.offsetWidth;
             monster.classList.add("attack");
-            const monsterDmg = random(
-                data.minAttack,
-                data.maxAttack
-            );
+            monster.style.backgroundImage = `url(${data.spriteAttack})`;
+     
+            const monsterDmg = random(data.minAttack, data.maxAttack);
             heroHp -= monsterDmg;
             writeLog(`${data.name} ударил (-${monsterDmg})`);
 
             setTimeout(() => {
                 monster.classList.remove("attack");
+                monster.style.backgroundImage = `url(${data.spriteIdle})`;
                 setTimeout(() => battleTurn(type, data), 160);
-            }, 120);
+            }, 800);
 
-        }, 500);
+        }, 800);
     }
 
+    /* ================================
+       DEATH
+    ================================ */
     function die() {
         monster.classList.add("hidden");
 
         const score = monsterCount - 1;
-
         writeLog("💀 Герой погиб");
         writeLog(`🏁 Побеждено монстров: ${score}`);
 
@@ -263,6 +285,9 @@ document.addEventListener("DOMContentLoaded", () => {
         fighting = false;
     }
 
+    /* ================================
+       REVIVE
+    ================================ */
     reviveBtn.addEventListener("click", () => {
         heroHp = heroMaxHp;
         monsterCount = 0;
