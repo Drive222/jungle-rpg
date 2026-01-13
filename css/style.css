@@ -136,21 +136,18 @@ body {
 .hero {
     position: absolute;
     left: 60px;
-    bottom: 25px;
-
+    bottom: 6px;
     width: 96px;
     height: 96px;
-
     transform: scale(2);
     transform-origin: bottom left;
-
     background-repeat: no-repeat;
-    background-size: auto;
+    background-position: 0 0;
     image-rendering: pixelated;
 }
 
 .hero.attack {
-    animation: heroAttack 0.8s steps(4) forwards;
+    animation: heroAttack 0.6s steps(4) forwards;
 }
 
 @keyframes heroAttack {
@@ -164,23 +161,30 @@ body {
 .monster {
     position: absolute;
     right: 80px;
-    bottom: 25px;
-
+    bottom: 6px;
     transform: scale(2);
     transform-origin: bottom right;
-
     background-repeat: no-repeat;
-    background-size: auto;
+    background-position: 0 0;
     image-rendering: pixelated;
 }
 
-.monster.attack {
-    animation: monsterAttack 0.8s steps(4) forwards;
+/* ===== WOLF ===== */
+.monster.wolf {
+    width: 96px;
+    height: 96px;
+    background-size: 96px 96px;
 }
 
-@keyframes monsterAttack {
+.monster.wolf.attack {
+    background-size: 384px 96px;
+    transform: scale(2.3);
+    animation: wolfAttack 0.6s steps(4) forwards;
+}
+
+@keyframes wolfAttack {
     from { background-position: 0 0; }
-    to   { background-position: -256px 0; }
+    to   { background-position: -384px 0; }
 }
 
 /* ================================
@@ -188,15 +192,15 @@ body {
 ================================ */
 .ui {
     background: #11212D;
-    padding: 18px 15px 26px;
+    padding: 14px 12px 18px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
 .ui button {
-    padding: 12px 22px;
+    padding: 12px 18px;
     border: none;
     border-radius: 10px;
     font-weight: bold;
@@ -210,7 +214,7 @@ body {
 
 .record {
     position: absolute;
-    right: 20px;
+    right: 16px;
     color: #ffd54f;
     font-weight: bold;
 }
@@ -225,15 +229,63 @@ body {
     overflow-y: auto;
     font-size: 14px;
     line-height: 1.4;
-    margin: 0 12px 22px;
+    margin: 0 12px 14px;
     border-radius: 6px;
 }
 
 /* ================================
-   MOBILE
+   MOBILE (KEY PART)
 ================================ */
 @media (max-width: 768px) {
 
+    .game {
+        height: 100svh; /* корректно для мобильных браузеров */
+    }
+
+    .scene {
+        min-height: 48vh;
+    }
+
+    /* ПЕРСОНАЖИ */
+    .hero {
+        left: 14px;
+        bottom: 6px;
+        transform: scale(1.4);
+    }
+
+    .monster {
+        right: 14px;
+        bottom: 6px;
+        transform: scale(1.4);
+    }
+
+    /* ЛОГ — ВАЖНО */
+    .log {
+        height: 160px;          /* больше строк видно */
+        margin-bottom: 10px;    /* ОТДАЛЯЕМ ОТ НИЗА */
+        font-size: 14px;
+    }
+
+    /* UI */
+    .ui {
+        padding-bottom: 14px;
+        gap: 10px;
+    }
+
+    .ui button {
+        flex: 1 1 100%;
+        font-size: 17px;
+        padding: 14px;
+    }
+
+    .record {
+        position: static;
+        width: 100%;
+        text-align: center;
+        margin-top: 6px;
+    }
+
+    /* CLASS SELECT */
     .classes {
         flex-direction: column;
         gap: 14px;
@@ -241,38 +293,6 @@ body {
 
     .classes button {
         width: 220px;
-    }
-
-    .scene {
-        min-height: 55vh;
-    }
-
-    .hero {
-        left: 18px;
-        bottom: 28px;
-        transform: scale(1.4);
-        transform-origin: bottom left;
-    }
-
-    .monster {
-        right: 18px;
-        transform: scale(1.4);
-        transform-origin: bottom right;
-    }
-
-    .ui {
-        flex-wrap: wrap;
-    }
-
-    .ui button {
-        flex: 1 1 100%;
-        font-size: 18px;
-        padding: 16px;
-    }
-
-    .log {
-        height: 110px;
-        font-size: 13px;
     }
 
     .class-preview {
@@ -284,5 +304,4 @@ body {
         font-size: 28px;
         top: 8px;
     }
-    
 }

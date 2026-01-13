@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("game.js loaded");
 
     /* ================================
-       DOM ELEMENTS
+       DOM
     ================================ */
     const classSelect = document.getElementById("classSelect");
     const game = document.getElementById("game");
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             spriteAttack: "assets/heroes/mage/attack.png"
         },
         archer: {
-            name: "🏹 Лучница",
+            name: "🏹 Лучник",
             hp: 100,
             minDamage: 40,
             maxDamage: 60,
@@ -77,12 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
             spriteIdle: "assets/monsters/wolf/idle.png",
             spriteAttack: "assets/monsters/wolf/attack.png",
             width: 96,
-            height: 48
+            height: 96
         }
     };
 
     /* ================================
-       GAME STATE
+       STATE
     ================================ */
     let heroClass = null;
     let heroMaxHp = 0;
@@ -108,23 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    // ⭐ лог со стопом перед нижней границей
     function writeLog(text) {
-        const prevScrollTop = log.scrollTop;
-        const prevScrollHeight = log.scrollHeight;
-
         log.innerHTML += text + "<br>";
-
-        const lineHeight = 18;
-        const maxAllowedScroll =
-            log.scrollHeight - log.clientHeight - lineHeight;
-
-        if (prevScrollTop < maxAllowedScroll) {
-            log.scrollTop =
-                prevScrollTop + (log.scrollHeight - prevScrollHeight);
-        } else {
-            log.scrollTop = maxAllowedScroll;
-        }
+        log.scrollTop = log.scrollHeight;
     }
 
     function getRandomMonsterType() {
@@ -132,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ================================
-       CLASS SELECTION
+       CLASS SELECT
     ================================ */
     document.querySelectorAll(".classes button").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -141,12 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (selectedClassKey !== classKey) {
                 selectedClassKey = classKey;
-
                 previewName.textContent = data.name;
                 previewHp.textContent = `❤️ HP: ${data.hp}`;
                 previewDmg.textContent =
                     `⚔️ Урон: ${data.minDamage} – ${data.maxDamage}`;
-
                 classPreview.classList.remove("hidden");
                 return;
             }
@@ -192,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
             random(0, data.hpGrowth) +
             monsterCount * 3;
 
-        monster.className = "monster";
+        monster.className = `monster ${type}`;
         monster.style.width = data.width + "px";
         monster.style.height = data.height + "px";
         monster.style.backgroundImage = `url(${data.spriteIdle})`;
@@ -216,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
             monster.classList.add("hidden");
             writeLog(`☠️ ${data.name} побеждён`);
             writeLog(`❤️ У героя осталось ${heroHp} HP`);
-            writeLog("⏸️ Нажми «В БОЙ» для следующего врага");
+            writeLog("⏸️ Нажми «В БОЙ»");
 
             fighting = false;
             fightBtn.disabled = false;
@@ -225,8 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         /* HERO ATTACK */
         hero.classList.remove("attack");
-        hero.style.backgroundPosition = "0 0";
-        void hero.offsetWidth; // перезапуск анимации
+        void hero.offsetWidth;
         hero.classList.add("attack");
         hero.style.backgroundImage = `url(${heroClass.spriteAttack})`;
 
@@ -243,13 +226,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            /* MONSTER ATTACK */
+            /* MONSTER ATTACK (СПРАЙТЫ) */
             monster.classList.remove("attack");
-            monster.style.backgroundPosition = "0 0";
             void monster.offsetWidth;
             monster.classList.add("attack");
             monster.style.backgroundImage = `url(${data.spriteAttack})`;
-     
+
             const monsterDmg = random(data.minAttack, data.maxAttack);
             heroHp -= monsterDmg;
             writeLog(`${data.name} ударил (-${monsterDmg})`);
@@ -258,9 +240,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 monster.classList.remove("attack");
                 monster.style.backgroundImage = `url(${data.spriteIdle})`;
                 setTimeout(() => battleTurn(type, data), 160);
-            }, 800);
+            }, 600);
 
-        }, 800);
+        }, 600);
     }
 
     /* ================================
