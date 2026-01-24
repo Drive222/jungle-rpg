@@ -1,0 +1,22 @@
+/* ================================
+   RESET
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================================
+   BASE
+================================ */
+body {
+    background: #06141B;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}

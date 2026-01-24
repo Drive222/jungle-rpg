@@ -2,18 +2,21 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Jungle RPG</title>
+    <title>Grimwood</title>
 
     <!-- Mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/inventory.css">
 </head>
 <body>
+
 <div class="game-title">
     Grimwood
 </div>
+
 <!-- ================================
      CLASS SELECTION SCREEN
 ================================ -->
@@ -26,7 +29,6 @@
         <button data-class="archer">🏹 Лучница</button>
     </div>
 
-    <!-- Class preview (1st click) -->
     <div class="class-preview hidden" id="classPreview">
         <h3 id="previewName"></h3>
         <p id="previewHp"></p>
@@ -40,34 +42,88 @@
 ================================ -->
 <div class="game hidden" id="game">
 
-    <!-- SCENE -->
     <div class="scene">
-
-        <!-- HERO -->
         <div class="hero idle" id="hero"></div>
-
-        <!-- MONSTER -->
         <div class="monster hidden" id="monster"></div>
-
     </div>
 
-    <!-- UI -->
     <div class="ui">
         <button id="fightBtn">⚔️ В БОЙ</button>
         <button id="reviveBtn" class="hidden">🔁 Возродиться</button>
-        <button disabled>🎒 Инвентарь</button>
+        <button id="inventoryBtn">🎒 Инвентарь</button>
 
         <div class="record" id="record">
             🏆 Рекорд: 0
         </div>
     </div>
 
-    <!-- LOG -->
     <div class="log" id="log"></div>
-
 </div>
 
-<!-- Script -->
+<!-- ================================
+     INVENTORY (STEP 6.0.1 — STRUCTURE)
+================================ -->
+<div class="inventory-overlay hidden" id="inventoryOverlay">
+
+    <div class="inventory-board">
+        <button class="inventory-close" id="inventoryCloseBtn">✕</button>
+
+        <!-- LEFT SIDE: HERO -->
+        <div class="inventory-left">
+            <h3>Герой</h3>
+
+            <!-- EQUIPMENT + HERO -->
+            <div class="hero-panel">
+                <div class="equip-slot left1"></div>
+                <div class="equip-slot right1"></div>
+
+                <div class="equip-slot left2"></div>
+                <div class="equip-slot right2"></div>
+
+                <div class="equip-slot left3"></div>
+                <div class="equip-slot right3"></div>
+
+                <div class="hero-avatar">
+                    <div class="hero-sprite"></div>
+                </div>
+
+                <div class="equip-slot bottom1"></div>
+                <div class="equip-slot bottom2"></div>
+                <div class="equip-slot bottom3"></div>
+            </div>
+
+            <!-- HERO STATS -->
+            <div class="hero-stats" id="heroStats">
+                <div>❤️ HP: <span id="statHp"></span></div>
+                <div>⚔️ Урон: <span id="statDmg"></span></div>
+                <div>🛡️ Защита: <span id="statDef"></span></div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE: INVENTORY -->
+        <div class="inventory-right">
+            <h3>Инвентарь</h3>
+
+            <!-- INVENTORY GRID -->
+            <div class="inventory-grid">
+                <!-- ячейки будут добавляться через JS -->
+            </div>
+
+            <!-- ITEM INFO (ПОКА ПУСТО, ШАГ 6 ПОЗЖЕ) -->
+            <div class="item-info hidden" id="itemInfo">
+                <!-- здесь позже будет описание предмета -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/battle.js"></script>
 <script src="js/game.js"></script>
 
 </body>

@@ -1,0 +1,76 @@
+/* ================================
+   CLASS SELECT
+================================ */
+.class-select {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: linear-gradient(#06141B, #11212D);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.class-select h2 {
+    font-size: 28px;
+    color: #9fdcff;
+}
+
+.classes {
+    display: flex;
+    gap: 20px;
+}
+
+.classes button {
+    padding: 16px 26px;
+    font-size: 18px;
+    border-radius: 12px;
+
+    background: #253745;
+    color: #cfeeff;
+    border: none;
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.15s;
+}
+
+.classes button:hover {
+    background: #3a556b;
+    transform: scale(1.05);
+}
+
+/* ================================
+   CLASS PREVIEW
+================================ */
+.class-preview {
+    padding: 20px 32px;
+    min-width: 260px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(40, 70, 90, 0.95),
+        rgba(20, 40, 55, 0.95)
+    );
+
+    border-radius: 16px;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.6),
+        inset 0 0 0 2px rgba(160,210,255,0.25);
+
+    text-align: center;
+}
+
+.class-preview h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #8fd3ff;
+}
+
+.class-preview p {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #e0f2ff;
+}

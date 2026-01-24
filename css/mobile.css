@@ -1,0 +1,70 @@
+/* ================================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+
+    .game {
+        height: 100svh;
+    }
+
+    .scene {
+        min-height: 48vh;
+    }
+
+    /* CHARACTERS */
+    .hero {
+        left: 14px;
+        transform: scale(1.4);
+    }
+
+    .monster {
+        right: 14px;
+        transform: scale(1.4);
+    }
+
+    /* LOG */
+    .log {
+        height: 160px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    /* UI */
+    .ui {
+        padding-bottom: 14px;
+        gap: 10px;
+    }
+
+    .ui button {
+        flex: 1 1 100%;
+        font-size: 17px;
+        padding: 14px;
+    }
+
+    .record {
+        position: static;
+        width: 100%;
+        text-align: center;
+        margin-top: 6px;
+    }
+
+    /* CLASS SELECT */
+    .classes {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .classes button {
+        width: 220px;
+    }
+
+    .class-preview {
+        width: 90%;
+        padding: 18px 20px;
+    }
+
+    .game-title {
+        font-size: 28px;
+        top: 8px;
+    }
+}

@@ -1,0 +1,399 @@
+/* ================================
+   INVENTORY OVERLAY
+================================ */
+
+.inventory-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================================
+   INVENTORY BOARD
+================================ */
+
+.inventory-board {
+    width: 900px;
+    height: 520px;
+
+    background: linear-gradient(#1b2a36, #0f1b24);
+    border-radius: 18px;
+
+    padding: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    padding-left: 50px;
+}
+
+/* ================================
+   HEADERS
+================================ */
+
+.inventory-left h3,
+.inventory-right h3 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #9fdcff;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+/* ================================
+   LEFT SIDE — HERO & EQUIPMENT
+================================ */
+
+.hero-panel {
+    display: grid;
+
+    grid-template-columns: 64px 120px 64px;
+    grid-template-rows: repeat(3, 64px) 80px;
+
+    grid-template-areas:
+        "left1  hero  right1"
+        "left2  hero  right2"
+        "left3  hero  right3"
+        "bottom1 bottom2 bottom3";
+
+    gap: 12px;
+
+    justify-content: center;
+    align-content: start;
+}
+
+/* ================================
+   HERO AVATAR
+================================ */
+
+.hero-avatar {
+    grid-area: hero;
+
+    width: 96px;
+    height: 192px;
+
+    background-color: rgba(255,255,255,0.08);
+    border-radius: 14px;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.18),
+        0 6px 14px rgba(0,0,0,0.4);
+
+    overflow: hidden;
+
+    /* центр по горизонтали */
+    justify-self: center;
+
+    /* 🔥 ОПУСКАЕМ ЯЧЕЙКУ */
+    align-self: start;
+    transform: translateY(10px);
+}
+
+.hero-sprite {
+    width: 100%;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: contain;
+
+    image-rendering: pixelated;
+
+    /* 🔥 ТЕПЕРЬ МАСШТАБИРУЕМ ТОЛЬКО ГЕРОЯ */
+    transform: translate(-2px, -55px) scale(1.3);
+}
+
+/* ================================
+   EQUIPMENT SLOTS (BASE)
+================================ */
+
+.equip-slot {
+    width: 64px;
+    height: 64px;
+
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.14),
+        0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* ================================
+   EQUIPMENT SLOT POSITIONS
+================================ */
+
+.left1  { grid-area: left1; }
+.left2  { grid-area: left2; }
+.left3  { grid-area: left3; }
+
+.right1 { grid-area: right1; }
+.right2 { grid-area: right2; }
+.right3 { grid-area: right3; }
+
+.bottom1 { grid-area: bottom1; }
+.bottom2 { grid-area: bottom2; }
+.bottom3 { grid-area: bottom3; }
+
+/* ================================
+   RIGHT SIDE — INVENTORY GRID
+================================ */
+
+.inventory-grid {
+    display: grid;
+
+    grid-template-columns: repeat(5, 64px);
+    grid-template-rows: repeat(4, 64px);
+    gap: 12px;
+
+    justify-content: center;
+    align-content: start;
+}
+
+/* ================================
+   INVENTORY CELL
+================================ */
+
+.inventory-cell {
+    width: 64px;
+    height: 64px;
+
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+
+    box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.14),
+        0 4px 10px rgba(0,0,0,0.35);
+}
+/* ================================
+   BOTTOM SLOTS — CUSTOM SPACING
+================================ */
+
+.bottom1,
+.bottom2,
+.bottom3 {
+    justify-self: center;
+}
+
+/* сдвигаем крайние внутрь */
+.bottom1 {
+    margin-right: -35px;
+}
+
+.bottom3 {
+    margin-left: -35px;
+}
+.inventory-left .hero-panel,
+.inventory-right .inventory-grid {
+    margin-top: 20px;
+}
+/* ================================
+   INVENTORY DIVIDER — SIMPLE GLOW
+================================ */
+
+.inventory-board {
+    position: relative;
+}
+
+.inventory-board::before {
+    content: "";
+    position: absolute;
+
+    /* линия не доходит до краёв */
+    top: 30px;
+    bottom: 30px;
+
+    /* положение между колонками */
+    left: calc(38% + 23px);
+
+    width: 2px;
+
+    background: rgba(180, 210, 255, 0.6);
+
+    box-shadow:
+        0 0 6px rgba(140, 190, 255, 0.6),
+        0 0 12px rgba(140, 190, 255, 0.3);
+
+    pointer-events: none;
+}
+/* ================================
+   HERO STATS (STEP 6.2)
+================================ */
+
+.hero-stats {
+    margin-top: 14px;
+    padding: 12px 14px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(10,15,20,0.55),
+        rgba(5,10,15,0.55)
+    );
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    line-height: 1.7;
+    color: #e0f2ff;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* ОДНА СТРОКА СТАТА */
+.hero-stats div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+/* ЗНАЧЕНИЯ СТАТОВ */
+.hero-stats span {
+    font-weight: bold;
+    color: #9fdcff;
+}
+/* ================================
+   INVENTORY ITEMS (STEP 6.3)
+================================ */
+
+.inventory-item {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    image-rendering: pixelated;
+    pointer-events: none;
+}
+
+/* выбранная ячейка */
+.inventory-cell.selected {
+    box-shadow:
+        inset 0 0 0 2px rgba(180,210,255,0.9),
+        0 0 10px rgba(120,180,255,0.6);
+}
+/* ================================
+   ITEM INFO PANEL (STEP 6.4)
+================================ */
+
+.item-info {
+    margin-top: 28px;
+
+    /* 🔥 делаем уже */
+    width: 440px;
+
+    min-height: 95px;
+    /* 🔥 сдвигаем вправо */
+    margin-left: auto;
+    margin-right: 30px;
+
+    padding: 14px 20px;
+
+    background: linear-gradient(
+        180deg,
+        rgba(10,15,20,0.6),
+        rgba(5,10,15,0.6)
+    );
+
+    border-radius: 12px;
+
+    color: #e0f2ff;
+    font-size: 14px;
+    line-height: 1.6;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 4px 10px rgba(0,0,0,0.35);
+}
+
+.item-info.hidden {
+    display: none;
+}
+
+.item-info h4 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #9fdcff;
+}
+
+.item-info p {
+    margin: 0;
+    opacity: 0.9;
+}
+/* ================================
+   ITEM ACTION BUTTONS (STEP 6.5)
+================================ */
+
+.item-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.item-actions button {
+    padding: 8px 14px;
+
+    background: #253745;
+    border: none;
+    border-radius: 8px;
+
+    color: #cfeeff;
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.1s;
+}
+
+.item-actions button:hover {
+    background: #3a556b;
+    transform: scale(1.05);
+}
+/* ================================
+   INVENTORY CLOSE BUTTON
+================================ */
+
+.inventory-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+    border: none;
+
+    background: rgba(20,30,40,0.8);
+    color: #cfeeff;
+
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.15),
+        0 4px 10px rgba(0,0,0,0.5);
+
+    transition:
+        background 0.2s,
+        transform 0.1s;
+}
+
+.inventory-close:hover {
+    background: rgba(50,70,90,0.9);
+    transform: scale(1.05);
+}

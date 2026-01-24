@@ -1,0 +1,48 @@
+/* ================================
+   HERO
+================================ */
+.hero {
+    position: absolute;
+    left: 60px;
+    bottom: 6px;
+
+    width: 96px;
+    height: 96px;
+
+    transform: scale(2);
+    transform-origin: bottom left;
+
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    image-rendering: pixelated;
+}
+
+/* ================================
+   MONSTER BASE
+================================ */
+.monster {
+    position: absolute;
+    right: 80px;
+    bottom: 6px;
+
+    transform: scale(2);
+    transform-origin: bottom right;
+
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    image-rendering: pixelated;
+}
+
+/* ===== GOBLIN ===== */
+.monster.goblin {
+    width: 64px;
+    height: 64px;
+    background-size: 64px 64px;
+}
+
+/* ===== WOLF ===== */
+.monster.wolf {
+    width: 96px;
+    height: 96px;
+    background-size: 96px 96px;
+}

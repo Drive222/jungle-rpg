@@ -1,0 +1,38 @@
+/* ================================
+   HERO ATTACK
+================================ */
+.hero.attack {
+    animation: heroAttack 0.6s steps(4) forwards;
+}
+
+@keyframes heroAttack {
+    from { background-position: 0 0; }
+    to   { background-position: -384px 0; }
+}
+
+/* ================================
+   GOBLIN ATTACK
+================================ */
+.monster.goblin.attack {
+    background-size: 256px 64px;
+    animation: goblinAttack 0.6s steps(4) forwards;
+}
+
+@keyframes goblinAttack {
+    from { background-position: 0 0; }
+    to   { background-position: -256px 0; }
+}
+
+/* ================================
+   WOLF ATTACK
+================================ */
+.monster.wolf.attack {
+    background-size: 384px 96px;
+    transform: scale(2.3);
+    animation: wolfAttack 0.6s steps(4) forwards;
+}
+
+@keyframes wolfAttack {
+    from { background-position: 0 0; }
+    to   { background-position: -384px 0; }
+}

@@ -1,0 +1,48 @@
+/* ================================
+   UI
+================================ */
+.ui {
+    background: #11212D;
+    padding: 14px 12px 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.ui button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ui button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.record {
+    position: absolute;
+    right: 16px;
+    color: #ffd54f;
+    font-weight: bold;
+}
+
+/* ================================
+   LOG
+================================ */
+.log {
+    background: #000;
+    padding: 12px 14px;
+    height: 140px;
+
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.4;
+
+    margin: 0 12px 14px;
+    border-radius: 6px;
+}
