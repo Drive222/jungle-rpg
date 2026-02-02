@@ -65,6 +65,7 @@ window.battle = (() => {
             ui.playAttack(ui.monster, data.spriteAttack);
             const monsterDmg = random(data.minAttack, data.maxAttack);
             state.heroHp -= monsterDmg;
+            ui.updateHpBar();
             ui.writeLog(`${data.name} ударил (-${monsterDmg})`);
 
             setTimeout(() => {

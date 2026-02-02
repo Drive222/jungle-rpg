@@ -22,6 +22,97 @@
 }
 
 /* ================================
+   GAME BOARD (HUD, НЕ ВЛИЯЕТ НА FLEX)
+================================ */
+/* ================================
+   GAME BOARD (HUD LAYER — БЕЗ ПОЛОСЫ)
+================================ */
+.game-board {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 0;          /* 👈 ВАЖНО: нет высоты */
+    z-index: 5;
+
+    pointer-events: none;
+    background: none;   /* 👈 убрали полосу */
+    box-shadow: none;   /* 👈 убрали тень */
+}
+
+/* ================================
+   HERO HP BAR (ВНУТРИ ДОСКИ)
+================================ */
+.hp-bar {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+
+    width: 220px;
+    padding: 10px 12px;
+
+    background: rgba(10, 20, 30, 0.75);
+    border-radius: 12px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.15),
+        0 6px 14px rgba(0,0,0,0.5);
+
+    font-size: 14px;
+    color: #e0f2ff;
+
+    z-index: 6;
+    pointer-events: auto;
+}
+
+.hp-bar__label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #ffb3b3;
+    font-size: 13px;
+}
+
+.hp-bar__outer {
+    width: 100%;
+    height: 16px;
+
+    background: rgba(0,0,0,0.4);
+    border-radius: 10px;
+    overflow: hidden;
+
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.6);
+}
+
+.hp-bar__inner {
+    height: 100%;
+    width: 100%;
+    transition: width 0.25s ease;
+}
+
+.hp-bar__text {
+    margin-top: 4px;
+    text-align: right;
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+/* ================================
+   HP COLORS
+================================ */
+.hp-good {
+    background: linear-gradient(90deg, #4caf50, #81c784);
+}
+
+.hp-mid {
+    background: linear-gradient(90deg, #ffb300, #ffd54f);
+}
+
+.hp-low {
+    background: linear-gradient(90deg, #e53935, #ff5252);
+}
+
+/* ================================
    GAME TITLE
 ================================ */
 .game-title {

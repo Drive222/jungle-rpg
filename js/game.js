@@ -47,11 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
             state.heroMinDmg = data.minDamage;
             state.heroMaxDmg = data.maxDamage;
 
+            // 🔥 ОБНОВЛЯЕМ HP-БАР СРАЗУ
+            ui.updateHpBar();
+
             // герой на сцене
             ui.hero.className = "hero idle";
             ui.hero.style.backgroundImage = `url(${data.spriteIdle})`;
 
-            // 🔥 ГЛАВНОЕ: герой в инвентаре
+            // герой в инвентаре
             inventory.setHeroSprite(data.spriteIdle);
             inventory.updateHeroStats();
             inventory.addItem("potion_small");
@@ -82,6 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ================================ */
     ui.reviveBtn.addEventListener("click", () => {
         state.heroHp = state.heroMaxHp;
+
+        // 🔥 ОБНОВЛЯЕМ HP-БАР
+        ui.updateHpBar();
+
         state.monsterCount = 0;
         document.getElementById("log").innerHTML = "";
 

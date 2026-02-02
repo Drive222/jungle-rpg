@@ -42,11 +42,27 @@
 ================================ -->
 <div class="game hidden" id="game">
 
+    <!-- 🪵 GAME BOARD (UI LAYER, ABOVE BACKGROUND) -->
+    <div class="game-board">
+
+        <!-- ❤️ HERO HP BAR -->
+        <div class="hp-bar">
+            <div class="hp-bar__label">❤️ HP</div>
+            <div class="hp-bar__outer">
+                <div class="hp-bar__inner" id="heroHpBar"></div>
+            </div>
+            <div class="hp-bar__text" id="heroHpText"></div>
+        </div>
+
+    </div>
+
+    <!-- 🌲 SCENE / BACKGROUND -->
     <div class="scene">
         <div class="hero idle" id="hero"></div>
         <div class="monster hidden" id="monster"></div>
     </div>
 
+    <!-- UI BUTTONS -->
     <div class="ui">
         <button id="fightBtn">⚔️ В БОЙ</button>
         <button id="reviveBtn" class="hidden">🔁 Возродиться</button>
@@ -61,7 +77,7 @@
 </div>
 
 <!-- ================================
-     INVENTORY (STEP 6.0.1 — STRUCTURE)
+     INVENTORY
 ================================ -->
 <div class="inventory-overlay hidden" id="inventoryOverlay">
 
@@ -72,7 +88,6 @@
         <div class="inventory-left">
             <h3>Герой</h3>
 
-            <!-- EQUIPMENT + HERO -->
             <div class="hero-panel">
                 <div class="equip-slot left1"></div>
                 <div class="equip-slot right1"></div>
@@ -92,7 +107,6 @@
                 <div class="equip-slot bottom3"></div>
             </div>
 
-            <!-- HERO STATS -->
             <div class="hero-stats" id="heroStats">
                 <div>❤️ HP: <span id="statHp"></span></div>
                 <div>⚔️ Урон: <span id="statDmg"></span></div>
@@ -104,17 +118,9 @@
         <div class="inventory-right">
             <h3>Инвентарь</h3>
 
-            <!-- INVENTORY GRID -->
-            <div class="inventory-grid">
-                <!-- ячейки будут добавляться через JS -->
-            </div>
-
-            <!-- ITEM INFO (ПОКА ПУСТО, ШАГ 6 ПОЗЖЕ) -->
-            <div class="item-info hidden" id="itemInfo">
-                <!-- здесь позже будет описание предмета -->
-            </div>
+            <div class="inventory-grid"></div>
+            <div class="item-info hidden" id="itemInfo"></div>
         </div>
-
     </div>
 </div>
 

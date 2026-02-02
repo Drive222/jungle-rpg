@@ -190,6 +190,7 @@ window.inventory = {
             this.renderItems();
             this.renderItemInfo();
             this.updateHeroStats();
+            ui.updateHpBar();
         }
     },
 
