@@ -51,8 +51,9 @@ window.MONSTERS = {
         spriteAttack: "assets/monsters/wolf/attack.png"
     }
 };
+
 /* ================================
-   ITEMS (STEP 6.1)
+   ITEMS
 ================================ */
 
 const ITEMS = {
@@ -61,7 +62,6 @@ const ITEMS = {
         name: "Малое зелье лечения",
         description: "Восстанавливает 30 HP.",
         icon: "assets/items/potion_red.png",
-
         type: "consumable",
         stackable: true,
         maxStack: 5
@@ -70,10 +70,32 @@ const ITEMS = {
     sword_rusty: {
         id: "sword_rusty",
         name: "Ржавый меч",
-        description: "Старый меч. Урон небольшой, но лучше, чем ничего.",
-        icon: "assets/items/sword_rusty.png",
-
+        description: "Одноручный меч. Немного увеличивает урон.",
         type: "weapon",
+        equipSlot: "weapon",
+        handed: "one",
+        minDamageBonus: 4,
+        maxDamageBonus: 7,
+        stackable: false
+    },
+
+    hood_old: {
+        id: "hood_old",
+        name: "Старый капюшон",
+        description: "Простой головной убор.",
+        type: "armor",
+        equipSlot: "head",
+        defBonus: 2,
+        stackable: false
+    },
+
+    ring_copper: {
+        id: "ring_copper",
+        name: "Медное кольцо",
+        description: "Чуть усиливает здоровье.",
+        type: "accessory",
+        equipSlot: "ring",
+        hpBonus: 10,
         stackable: false
     }
 };

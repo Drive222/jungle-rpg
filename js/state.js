@@ -15,7 +15,12 @@ window.state = {
     heroMinDmg: 0,
     heroMaxDmg: 0,
 
-    heroDef: 0, // защита (пока 0, позже экипировка)
+    heroDef: 0,
+
+    baseHeroMaxHp: 0,
+    baseHeroMinDmg: 0,
+    baseHeroMaxDmg: 0,
+    baseHeroDef: 0,
 
     /* ================================
        MONSTERS / BATTLE
@@ -27,8 +32,21 @@ window.state = {
     selectedClassKey: null,
 
     /* ================================
-       INVENTORY (STEP 6.2)
+       INVENTORY + EQUIPMENT
     ================================ */
-    inventory: new Array(20).fill(null), // 20 ячеек
-    selectedItemIndex: null              // выбранный предмет
+    inventory: new Array(20).fill(null),
+    selectedItemIndex: null,
+    selectedEquipmentSlot: null,
+
+    equipment: {
+        head: null,
+        chest: null,
+        weaponMain: null,
+        weaponOff: null,
+        ring: null,
+        neck: null,
+        cloak: null,
+        legs: null,
+        boots: null
+    }
 };

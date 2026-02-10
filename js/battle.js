@@ -42,6 +42,13 @@ window.battle = (() => {
             ui.writeLog(`☠️ ${data.name} побеждён`);
             ui.writeLog(`❤️ У героя осталось ${state.heroHp} HP`);
 
+            const bestScore = Number(localStorage.getItem("bestScore") || 0);
+            if (state.monsterCount > bestScore) {
+                localStorage.setItem("bestScore", String(state.monsterCount));
+                ui.recordEl.textContent = `🏆 Рекорд: ${state.monsterCount}`;
+                ui.writeLog(`🏆 Новый рекорд: ${state.monsterCount}`);
+            }
+
             state.fighting = false;
             ui.fightBtn.disabled = false;
             return;
