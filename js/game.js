@@ -8,9 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     inventory.init();
 
     const inventoryBtn = document.getElementById("inventoryBtn");
-    inventoryBtn.addEventListener("click", () => {
-        inventory.toggle();
-    });
+    if (inventoryBtn) {
+        inventoryBtn.addEventListener("click", () => {
+            inventory.toggle();
+        });
+    }
 
     /* ================================
        RECORD
@@ -42,10 +44,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // 2️⃣ ВТОРОЙ КЛИК — ОКОНЧАТЕЛЬНЫЙ ВЫБОР ГЕРОЯ
             state.heroClass = data;
+            state.baseHeroMaxHp = data.hp;
+            state.baseHeroMinDmg = data.minDamage;
+            state.baseHeroMaxDmg = data.maxDamage;
+            state.baseHeroDef = 0;
+
             state.heroMaxHp = data.hp;
             state.heroHp = data.hp;
             state.heroMinDmg = data.minDamage;
             state.heroMaxDmg = data.maxDamage;
+            state.heroDef = 0;
 
             // 🔥 ОБНОВЛЯЕМ HP-БАР СРАЗУ
             ui.updateHpBar();
@@ -59,6 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
             inventory.updateHeroStats();
             inventory.addItem("potion_small");
             inventory.addItem("sword_rusty");
+            inventory.addItem("hood_old");
+            inventory.addItem("ring_copper");
+            inventory.recalculateHeroStats();
 
             // переход в игру
             document.getElementById("classSelect").style.display = "none";
