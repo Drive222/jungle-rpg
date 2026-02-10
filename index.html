@@ -42,10 +42,7 @@
 ================================ -->
 <div class="game hidden" id="game">
 
-    <!-- 🪵 GAME BOARD (UI LAYER, ABOVE BACKGROUND) -->
     <div class="game-board">
-
-        <!-- ❤️ HERO HP BAR -->
         <div class="hp-bar">
             <div class="hp-bar__label">❤️ HP</div>
             <div class="hp-bar__outer">
@@ -53,16 +50,13 @@
             </div>
             <div class="hp-bar__text" id="heroHpText"></div>
         </div>
-
     </div>
 
-    <!-- 🌲 SCENE / BACKGROUND -->
     <div class="scene">
         <div class="hero idle" id="hero"></div>
         <div class="monster hidden" id="monster"></div>
     </div>
 
-    <!-- UI BUTTONS -->
     <div class="ui">
         <button id="fightBtn">⚔️ В БОЙ</button>
         <button id="reviveBtn" class="hidden">🔁 Возродиться</button>
@@ -84,27 +78,26 @@
     <div class="inventory-board">
         <button class="inventory-close" id="inventoryCloseBtn">✕</button>
 
-        <!-- LEFT SIDE: HERO -->
         <div class="inventory-left">
             <h3>Герой</h3>
 
             <div class="hero-panel">
-                <div class="equip-slot left1"></div>
-                <div class="equip-slot right1"></div>
+                <div class="equip-slot left1" data-slot="head" data-placeholder="🪖"></div>
+                <div class="equip-slot right1" data-slot="neck" data-placeholder="📿"></div>
 
-                <div class="equip-slot left2"></div>
-                <div class="equip-slot right2"></div>
+                <div class="equip-slot left2" data-slot="ring" data-placeholder="💍"></div>
+                <div class="equip-slot right2" data-slot="chest" data-placeholder="🛡️"></div>
 
-                <div class="equip-slot left3"></div>
-                <div class="equip-slot right3"></div>
+                <div class="equip-slot left3" data-slot="weaponMain" data-placeholder="⚔️"></div>
+                <div class="equip-slot right3" data-slot="weaponOff" data-placeholder="🗡️"></div>
 
                 <div class="hero-avatar">
                     <div class="hero-sprite"></div>
                 </div>
 
-                <div class="equip-slot bottom1"></div>
-                <div class="equip-slot bottom2"></div>
-                <div class="equip-slot bottom3"></div>
+                <div class="equip-slot bottom1" data-slot="cloak" data-placeholder="🧥"></div>
+                <div class="equip-slot bottom2" data-slot="legs" data-placeholder="👖"></div>
+                <div class="equip-slot bottom3" data-slot="boots" data-placeholder="🥾"></div>
             </div>
 
             <div class="hero-stats" id="heroStats">
@@ -114,7 +107,6 @@
             </div>
         </div>
 
-        <!-- RIGHT SIDE: INVENTORY -->
         <div class="inventory-right">
             <h3>Инвентарь</h3>
 
@@ -124,7 +116,6 @@
     </div>
 </div>
 
-<!-- Scripts -->
 <script src="js/data.js"></script>
 <script src="js/state.js"></script>
 <script src="js/ui.js"></script>

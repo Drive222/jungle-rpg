@@ -127,6 +127,66 @@
         0 4px 10px rgba(0,0,0,0.35);
 }
 
+
+
+.equip-slot {
+    position: relative;
+    cursor: pointer;
+}
+
+.equip-slot::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    opacity: 0.35;
+}
+
+.equip-slot.has-item::before,
+.equip-slot.blocked::before {
+    display: none;
+}
+
+.equip-slot.selected {
+    box-shadow:
+        inset 0 0 0 2px rgba(180,210,255,0.95),
+        0 0 10px rgba(120,180,255,0.6);
+}
+
+.equip-slot-label {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    color: #d5ecff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    padding: 4px;
+}
+
+.equip-slot-blocked {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: rgba(207, 236, 255, 0.85);
+    font-size: 16px;
+    font-weight: 800;
+}
 /* ================================
    EQUIPMENT SLOT POSITIONS
 ================================ */
