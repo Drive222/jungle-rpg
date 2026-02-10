@@ -71,6 +71,7 @@ const ITEMS = {
         id: "sword_rusty",
         name: "Ржавый меч",
         description: "Одноручный меч. Немного увеличивает урон.",
+        description: "Старый меч. Урон небольшой, но лучше, чем ничего.",
         type: "weapon",
         equipSlot: "weapon",
         handed: "one",

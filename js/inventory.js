@@ -20,6 +20,24 @@ window.inventory = {
         boots: "boots"
     },
 
+    getItemData(entry) {
+        if (!entry) return null;
+
+        if (entry.id && ITEMS[entry.id]) {
+            return ITEMS[entry.id];
+        }
+
+        return entry;
+    },
+
+    getItemAmount(entry) {
+        if (!entry) return 0;
+        return entry.amount || 1;
+    },
+
+    /* ================================
+       INIT
+    ================================ */
     init() {
         this.overlay = document.getElementById("inventoryOverlay");
         this.grid = document.querySelector(".inventory-grid");
@@ -102,6 +120,10 @@ window.inventory = {
             const entry = state.inventory[index];
             const itemData = this.getItemData(entry);
             if (!entry || !itemData) return;
+
+            const itemData = this.getItemData(item);
+            const amount = this.getItemAmount(item);
+            if (!itemData) return;
 
             if (itemData.icon) {
                 const img = document.createElement("img");
@@ -214,6 +236,9 @@ window.inventory = {
         if (!itemData) return false;
 
         if (this.isStackable(itemData)) {
+        if (!itemData) return;
+
+        if (itemData.stackable) {
             for (let i = 0; i < state.inventory.length; i++) {
                 const slot = state.inventory[i];
                 if (!slot || slot.id !== itemId) continue;
@@ -223,6 +248,12 @@ window.inventory = {
                     state.inventory[i] = this.makeEntry(itemId, currentAmount + 1);
                     this.renderItems();
                     return true;
+                    state.inventory[i] = {
+                        id: itemId,
+                        amount: currentAmount + 1
+                    };
+                    this.renderItems();
+                    return;
                 }
             }
         }
