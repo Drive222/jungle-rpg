@@ -71,8 +71,6 @@ const ITEMS = {
         id: "sword_rusty",
         name: "Ржавый меч",
         description: "Старый меч. Урон небольшой, но лучше, чем ничего.",
-        icon: "assets/items/sword_rusty.png",
-
         type: "weapon",
         stackable: false
     }

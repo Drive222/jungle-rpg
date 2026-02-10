@@ -10,6 +10,21 @@ window.inventory = {
     closeBtn: null,
     isOpen: false,
 
+    getItemData(entry) {
+        if (!entry) return null;
+
+        if (entry.id && ITEMS[entry.id]) {
+            return ITEMS[entry.id];
+        }
+
+        return entry;
+    },
+
+    getItemAmount(entry) {
+        if (!entry) return 0;
+        return entry.amount || 1;
+    },
+
     /* ================================
        INIT
     ================================ */
@@ -68,17 +83,28 @@ window.inventory = {
             const item = state.inventory[index];
             if (!item) return;
 
-            if (item.icon) {
+            const itemData = this.getItemData(item);
+            const amount = this.getItemAmount(item);
+            if (!itemData) return;
+
+            if (itemData.icon) {
                 const img = document.createElement("img");
-                img.src = item.icon;
-                img.alt = item.name;
+                img.src = itemData.icon;
+                img.alt = itemData.name;
                 img.className = "inventory-item";
                 cell.appendChild(img);
             } else {
                 const label = document.createElement("div");
-                label.textContent = item.name;
+                label.textContent = itemData.name;
                 label.className = "inventory-placeholder";
                 cell.appendChild(label);
+            }
+
+            if (amount > 1) {
+                const amountEl = document.createElement("div");
+                amountEl.className = "inventory-item-amount";
+                amountEl.textContent = `x${amount}`;
+                cell.appendChild(amountEl);
             }
 
             if (state.selectedItemIndex === index) {
@@ -109,12 +135,32 @@ window.inventory = {
        ADD ITEM (TEMP / TEST)
     ================================ */
     addItem(itemId) {
-        const item = ITEMS[itemId];
-        if (!item) return;
+        const itemData = ITEMS[itemId];
+        if (!itemData) return;
+
+        if (itemData.stackable) {
+            for (let i = 0; i < state.inventory.length; i++) {
+                const slot = state.inventory[i];
+                if (!slot || slot.id !== itemId) continue;
+
+                const currentAmount = this.getItemAmount(slot);
+                if (currentAmount < itemData.maxStack) {
+                    state.inventory[i] = {
+                        id: itemId,
+                        amount: currentAmount + 1
+                    };
+                    this.renderItems();
+                    return;
+                }
+            }
+        }
 
         for (let i = 0; i < state.inventory.length; i++) {
             if (state.inventory[i] === null) {
-                state.inventory[i] = item;
+                state.inventory[i] = {
+                    id: itemId,
+                    amount: 1
+                };
                 break;
             }
         }
@@ -137,7 +183,9 @@ window.inventory = {
         }
 
         const item = state.inventory[index];
-        if (!item) {
+        const itemData = this.getItemData(item);
+
+        if (!item || !itemData) {
             this.itemInfo.classList.add("hidden");
             this.itemInfo.innerHTML = "";
             return;
@@ -147,7 +195,7 @@ window.inventory = {
 
         let actionsHtml = "";
 
-        if (item.type === "consumable") {
+        if (itemData.type === "consumable") {
             actionsHtml = `
                 <div class="item-actions">
                     <button id="useItemBtn">Использовать</button>
@@ -155,9 +203,13 @@ window.inventory = {
             `;
         }
 
+        const amount = this.getItemAmount(item);
+        const amountText = amount > 1 ? `<p>Количество: ${amount}</p>` : "";
+
         this.itemInfo.innerHTML = `
-            <h4>${item.name}</h4>
-            <p>${item.description || ""}</p>
+            <h4>${itemData.name}</h4>
+            <p>${itemData.description || ""}</p>
+            ${amountText}
             ${actionsHtml}
         `;
 
@@ -174,9 +226,10 @@ window.inventory = {
     ================================ */
     useItem(index) {
         const item = state.inventory[index];
-        if (!item) return;
+        const itemData = this.getItemData(item);
+        if (!item || !itemData) return;
 
-        if (item.id === "potion_small") {
+        if (itemData.id === "potion_small") {
             const healAmount = 30;
 
             state.heroHp = Math.min(
@@ -184,8 +237,16 @@ window.inventory = {
                 state.heroMaxHp
             );
 
-            state.inventory[index] = null;
-            state.selectedItemIndex = null;
+            const amount = this.getItemAmount(item);
+            if (amount > 1) {
+                state.inventory[index] = {
+                    id: itemData.id,
+                    amount: amount - 1
+                };
+            } else {
+                state.inventory[index] = null;
+                state.selectedItemIndex = null;
+            }
 
             this.renderItems();
             this.renderItemInfo();

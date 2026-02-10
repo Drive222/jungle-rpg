@@ -173,6 +173,27 @@
         inset 0 0 0 2px rgba(255,255,255,0.14),
         0 4px 10px rgba(0,0,0,0.35);
 }
+
+.inventory-cell {
+    position: relative;
+}
+
+.inventory-item-amount {
+    position: absolute;
+    right: 4px;
+    bottom: 3px;
+
+    padding: 1px 6px;
+    border-radius: 999px;
+
+    background: rgba(10, 18, 26, 0.85);
+    color: #e6f6ff;
+    font-size: 11px;
+    font-weight: 700;
+
+    pointer-events: none;
+}
+
 /* ================================
    BOTTOM SLOTS — CUSTOM SPACING
 ================================ */
