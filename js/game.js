@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             state.heroMinDmg = data.minDamage;
             state.heroMaxDmg = data.maxDamage;
             state.heroDef = 0;
+            state.heroEffects = [];
 
             // 🔥 ОБНОВЛЯЕМ HP-БАР СРАЗУ
             ui.updateHpBar();
@@ -94,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ================================ */
     ui.reviveBtn.addEventListener("click", () => {
         state.heroHp = state.heroMaxHp;
+        state.heroEffects = [];
 
         // 🔥 ОБНОВЛЯЕМ HP-БАР
         ui.updateHpBar();
