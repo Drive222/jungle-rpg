@@ -39,8 +39,8 @@ window.MONSTERS = {
         maxAttack: 34,
         defense: 2,
         chance: 28,
-        spriteIdle: "assets/monsters/wolf/idle.png",
-        spriteAttack: "assets/monsters/wolf/attack.png",
+        spriteIdle: "assets/monsters/dire_wolf/idle.svg",
+        spriteAttack: "assets/monsters/dire_wolf/attack.svg",
         abilities: [
             { name: "Рваная рана", effect: "bleed", chance: 0.35, damage: 4, turns: 2 }
         ]
@@ -54,8 +54,8 @@ window.MONSTERS = {
         maxAttack: 38,
         defense: 5,
         chance: 22,
-        spriteIdle: "assets/monsters/goblin/idle.png",
-        spriteAttack: "assets/monsters/goblin/attack.png",
+        spriteIdle: "assets/monsters/gravebound_soldier/idle.svg",
+        spriteAttack: "assets/monsters/gravebound_soldier/attack.svg",
         abilities: [
             { name: "Костяной щит", effect: "fortify", chance: 0.28, defenseBoost: 4, turns: 1 }
         ]
@@ -69,8 +69,8 @@ window.MONSTERS = {
         maxAttack: 42,
         defense: 4,
         chance: 18,
-        spriteIdle: "assets/monsters/goblin/idle.png",
-        spriteAttack: "assets/monsters/goblin/attack.png",
+        spriteIdle: "assets/monsters/briar_cultist/idle.svg",
+        spriteAttack: "assets/monsters/briar_cultist/attack.svg",
         abilities: [
             { name: "Кровавый обет", effect: "enrage", chance: 0.3, minBoost: 4, maxBoost: 6, turns: 2 }
         ]
@@ -84,8 +84,8 @@ window.MONSTERS = {
         maxAttack: 44,
         defense: 3,
         chance: 20,
-        spriteIdle: "assets/monsters/goblin/idle.png",
-        spriteAttack: "assets/monsters/goblin/attack.png",
+        spriteIdle: "assets/monsters/ash_imp/idle.svg",
+        spriteAttack: "assets/monsters/ash_imp/attack.svg",
         abilities: [
             { name: "Ожог скверны", effect: "poison", chance: 0.32, damage: 5, turns: 2 }
         ]
@@ -99,8 +99,8 @@ window.MONSTERS = {
         maxAttack: 50,
         defense: 6,
         chance: 12,
-        spriteIdle: "assets/monsters/wolf/idle.png",
-        spriteAttack: "assets/monsters/wolf/attack.png",
+        spriteIdle: "assets/monsters/gloom_wisp/idle.svg",
+        spriteAttack: "assets/monsters/gloom_wisp/attack.svg",
         abilities: [
             { name: "Мерцание", effect: "dodge", chance: 0.25, turns: 1 },
             { name: "Разлом маны", effect: "enrage", chance: 0.2, minBoost: 3, maxBoost: 5, turns: 2 }
@@ -116,8 +116,8 @@ window.BOSSES = {
         minAttack: 42,
         maxAttack: 62,
         defense: 10,
-        spriteIdle: "assets/monsters/wolf/idle.png",
-        spriteAttack: "assets/monsters/wolf/attack.png",
+        spriteIdle: "assets/monsters/rootbound_colossus/idle.svg",
+        spriteAttack: "assets/monsters/rootbound_colossus/attack.svg",
         abilities: [
             { name: "Сотрясение рощи", effect: "bleed", chance: 0.4, damage: 8, turns: 2 },
             { name: "Кора древних", effect: "fortify", chance: 0.3, defenseBoost: 6, turns: 2 }
@@ -131,8 +131,8 @@ window.BOSSES = {
         minAttack: 48,
         maxAttack: 70,
         defense: 9,
-        spriteIdle: "assets/monsters/goblin/idle.png",
-        spriteAttack: "assets/monsters/goblin/attack.png",
+        spriteIdle: "assets/monsters/abyss_hart/idle.svg",
+        spriteAttack: "assets/monsters/abyss_hart/attack.svg",
         abilities: [
             { name: "Рывок затмения", effect: "dodge", chance: 0.35, turns: 1 },
             { name: "Лютый гон", effect: "enrage", chance: 0.3, minBoost: 6, maxBoost: 9, turns: 2 }
@@ -146,8 +146,8 @@ window.BOSSES = {
         minAttack: 52,
         maxAttack: 78,
         defense: 12,
-        spriteIdle: "assets/monsters/goblin/idle.png",
-        spriteAttack: "assets/monsters/goblin/attack.png",
+        spriteIdle: "assets/monsters/witch_queen_thorns/idle.svg",
+        spriteAttack: "assets/monsters/witch_queen_thorns/attack.svg",
         abilities: [
             { name: "Проклятая чума", effect: "poison", chance: 0.42, damage: 9, turns: 3 },
             { name: "Трон шипов", effect: "fortify", chance: 0.35, defenseBoost: 8, turns: 2 }
