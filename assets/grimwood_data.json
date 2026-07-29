@@ -1,0 +1,1110 @@
+{
+  "meta": {
+    "game": "Grimwood",
+    "version": "2.0.0",
+    "description": "Полная структура данных для средневековой RPG игры Grimwood",
+    "last_updated": "2026-07-28"
+  },
+  "classes": [
+    {
+      "id": "archer",
+      "name": "Лучница",
+      "description": "Мастер дальнего боя, быстрая и ловкая",
+      "base_stats": {
+        "health": 80,
+        "mana": 60,
+        "attack": 12,
+        "defense": 6,
+        "speed": 105
+      },
+      "speed": {
+        "base": 105,
+        "modifiers": {
+          "permanent": [],
+          "temporary": []
+        },
+        "final": 105
+      }
+    },
+    {
+      "id": "mage",
+      "name": "Маг",
+      "description": "Владелец магических искусств, средняя скорость",
+      "base_stats": {
+        "health": 70,
+        "mana": 100,
+        "attack": 15,
+        "defense": 4,
+        "speed": 100
+      },
+      "speed": {
+        "base": 100,
+        "modifiers": {
+          "permanent": [],
+          "temporary": []
+        },
+        "final": 100
+      }
+    },
+    {
+      "id": "warrior",
+      "name": "Воин",
+      "description": "Крепкий боец ближнего боя, чуть медленнее других",
+      "base_stats": {
+        "health": 100,
+        "mana": 40,
+        "attack": 10,
+        "defense": 10,
+        "speed": 95
+      },
+      "speed": {
+        "base": 95,
+        "modifiers": {
+          "permanent": [],
+          "temporary": []
+        },
+        "final": 95
+      }
+    }
+  ],
+  "regions": [
+    {
+      "id": 0,
+      "name": "Деревня Гримвуд",
+      "type": "safe",
+      "level_range": null,
+      "description": "Безопасная стартовая зона. Торговцы, квесты, крафт и найм спутников.",
+      "coordinates": { "x": 500, "y": 600 },
+      "connections_to_regions": [1],
+      "locations": [
+        {
+          "id": "loc_0_0",
+          "name": "Базар",
+          "type": "peaceful",
+          "level_range": null,
+          "description": "Торговцы, аукцион. Здесь можно купить и продать снаряжение.",
+          "coord": { "x": 400, "y": 550 },
+          "mobs": [],
+          "npcs": ["Торговец Арно", "Аукционистка Лира"],
+          "roads": [
+            { "to": "loc_0_1", "distance": 25 },
+            { "to": "loc_0_2", "distance": 20 }
+          ]
+        },
+        {
+          "id": "loc_0_1",
+          "name": "Гильдия искателей приключений",
+          "type": "peaceful",
+          "level_range": null,
+          "description": "Квесты, доски заданий. Центр получения и сдачи квестов.",
+          "coord": { "x": 550, "y": 500 },
+          "mobs": [],
+          "npcs": ["Гильдмастер Боромир", "Секретарь Эльза"],
+          "roads": [
+            { "to": "loc_0_0", "distance": 25 },
+            { "to": "loc_0_3", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_0_2",
+          "name": "Кузница",
+          "type": "peaceful",
+          "level_range": null,
+          "description": "Крафт, апгрейд снаряжения. Кузнечные и ювелирные услуги.",
+          "coord": { "x": 350, "y": 650 },
+          "mobs": [],
+          "npcs": ["Кузнец Торгрим", "Ювелир Мира"],
+          "roads": [
+            { "to": "loc_0_0", "distance": 20 },
+            { "to": "loc_0_3", "distance": 25 }
+          ]
+        },
+        {
+          "id": "loc_0_3",
+          "name": "Таверна",
+          "type": "peaceful",
+          "level_range": null,
+          "description": "Слухи, побочные квесты, найм спутников. Место отдыха и сбора информации.",
+          "coord": { "x": 500, "y": 700 },
+          "mobs": [],
+          "npcs": ["Трактирщик Ганс", "Бард Лютен", "Наёмник Кейн"],
+          "roads": [
+            { "to": "loc_0_1", "distance": 30 },
+            { "to": "loc_0_2", "distance": 25 }
+          ]
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_0_1",
+        "to_region": 1,
+        "to_location": "loc_1_0",
+        "distance": 40,
+        "description": "Тропа от Гильдии ведёт в Древний лес"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Древний лес",
+      "type": "wilderness",
+      "level_range": { "min": 1, "max": 5 },
+      "description": "Таинственный лес, полный опасностей. Первая зона для приключений.",
+      "coordinates": { "x": 500, "y": 450 },
+      "connections_to_regions": [0, 2],
+      "locations": [
+        {
+          "id": "loc_1_0",
+          "name": "Опушка леса",
+          "type": "combat",
+          "level_range": { "min": 1, "max": 3 },
+          "description": "Вход в Древний лес. Водится некрупная живность.",
+          "coord": { "x": 450, "y": 400 },
+          "mobs": [
+            { "id": "mob_1_0_0", "name": "Лесной волк", "level": 2, "type": "normal" },
+            { "id": "mob_1_0_1", "name": "Заяц-мутант", "level": 1, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_1_1", "distance": 28 },
+            { "to": "loc_1_3", "distance": 25 }
+          ]
+        },
+        {
+          "id": "loc_1_1",
+          "name": "Волчье логово",
+          "type": "combat",
+          "level_range": { "min": 3, "max": 5 },
+          "description": "Логово волчьей стаи. Опасная зона для новичков.",
+          "coord": { "x": 600, "y": 350 },
+          "mobs": [
+            { "id": "mob_1_1_0", "name": "Волк-охотник", "level": 3, "type": "normal" },
+            { "id": "mob_1_1_1", "name": "Матерый волк", "level": 4, "type": "normal" },
+            { "id": "mob_1_1_2", "name": "Альфа-вожак", "level": 5, "type": "boss" }
+          ],
+          "roads": [
+            { "to": "loc_1_0", "distance": 28 },
+            { "to": "loc_1_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_1_2",
+          "name": "Друидская роща",
+          "type": "combat",
+          "level_range": { "min": 4, "max": 5 },
+          "description": "Священная роща, захваченная друидами-отступниками. Множество ловушек.",
+          "coord": { "x": 650, "y": 450 },
+          "mobs": [
+            { "id": "mob_1_2_0", "name": "Друид-отступник", "level": 4, "type": "normal" },
+            { "id": "mob_1_2_1", "name": "Друид-старший", "level": 5, "type": "elite" },
+            { "id": "mob_1_2_2", "name": "Корневая ловушка", "level": 4, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_1_1", "distance": 22 },
+            { "to": "loc_1_4", "distance": 35 }
+          ]
+        },
+        {
+          "id": "loc_1_3",
+          "name": "Старая мельница",
+          "type": "combat",
+          "level_range": { "min": 2, "max": 4 },
+          "description": "Заброшенная мельница, облюбованная разбойниками.",
+          "coord": { "x": 400, "y": 300 },
+          "mobs": [
+            { "id": "mob_1_3_0", "name": "Разбойник", "level": 2, "type": "normal" },
+            { "id": "mob_1_3_1", "name": "Разбойник-громила", "level": 3, "type": "normal" },
+            { "id": "mob_1_3_2", "name": "Атаман разбойников", "level": 4, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_1_0", "distance": 25 },
+            { "to": "loc_1_4", "distance": 32 }
+          ]
+        },
+        {
+          "id": "loc_1_4",
+          "name": "Пещера теней",
+          "type": "dungeon",
+          "level_range": { "min": 3, "max": 5 },
+          "description": "Лёгкий вводный данж: волки-тени, простые ловушки, мини-босс в конце.",
+          "coord": { "x": 550, "y": 250 },
+          "mobs": [
+            { "id": "mob_1_4_0", "name": "Волк-тень", "level": 3, "type": "normal" },
+            { "id": "mob_1_4_1", "name": "Теневой ловчий", "level": 4, "type": "normal" },
+            { "id": "mob_1_4_2", "name": "Теневой вожак", "level": 5, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_1_2", "distance": 35 },
+            { "to": "loc_1_3", "distance": 32 }
+          ],
+          "dungeon_info": {
+            "difficulty": "easy",
+            "boss": {
+              "id": "boss_1_4",
+              "name": "Теневой вожак",
+              "level": 5,
+              "type": "elite",
+              "phases": [
+                {
+                  "phase": 1,
+                  "name": "Теневой рывок",
+                  "description": "Босс атакует теневой сферой, нанося урон по площади",
+                  "hp_percent": 100
+                },
+                {
+                  "phase": 2,
+                  "name": "Призыв теней",
+                  "description": "На 50% HP призывает двух теневых копий",
+                  "hp_percent": 50
+                }
+              ]
+            },
+            "recommended_party_size": "1-2 игрока",
+            "loot_table": ["Ожерелье Пепельной Молитвы", "Кольцо Глубинных Корней"]
+          }
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_1_1",
+        "to_region": 2,
+        "to_location": "loc_2_0",
+        "distance": 45,
+        "description": "Тропа от Волчьего логова ведёт к Гоблинскому частоколу"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Заброшенный лагерь",
+      "type": "wilderness",
+      "level_range": { "min": 5, "max": 10 },
+      "description": "Бывший военный лагерь, захваченный гоблинами.",
+      "coordinates": { "x": 700, "y": 400 },
+      "connections_to_regions": [1, 3],
+      "locations": [
+        {
+          "id": "loc_2_0",
+          "name": "Гоблинский частокол",
+          "type": "combat",
+          "level_range": { "min": 5, "max": 6 },
+          "description": "Внешние укрепления гоблинов. Кишит рядовыми гоблинами.",
+          "coord": { "x": 700, "y": 350 },
+          "mobs": [
+            { "id": "mob_2_0_0", "name": "Гоблин-копейщик", "level": 5, "type": "normal" },
+            { "id": "mob_2_0_1", "name": "Гоблин-лучник", "level": 5, "type": "normal" },
+            { "id": "mob_2_0_2", "name": "Гоблин-надзиратель", "level": 6, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_2_1", "distance": 20 },
+            { "to": "loc_2_4", "distance": 18 }
+          ]
+        },
+        {
+          "id": "loc_2_1",
+          "name": "Склад награбленного",
+          "type": "combat",
+          "level_range": { "min": 6, "max": 8 },
+          "description": "Склад с трофеями гоблинов. Полно ловушек и сундуков.",
+          "coord": { "x": 780, "y": 400 },
+          "mobs": [
+            { "id": "mob_2_1_0", "name": "Гоблин-ловкач", "level": 6, "type": "normal" },
+            { "id": "mob_2_1_1", "name": "Гоблин-страж", "level": 7, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_2_0", "distance": 20 },
+            { "to": "loc_2_2", "distance": 25 }
+          ]
+        },
+        {
+          "id": "loc_2_2",
+          "name": "Шаманский костёр",
+          "type": "combat",
+          "level_range": { "min": 7, "max": 9 },
+          "description": "Центр шаманских ритуалов гоблинов. Очень опасно.",
+          "coord": { "x": 820, "y": 450 },
+          "mobs": [
+            { "id": "mob_2_2_0", "name": "Гоблин-шаман", "level": 7, "type": "normal" },
+            { "id": "mob_2_2_1", "name": "Гоблин-духовидец", "level": 8, "type": "elite" },
+            { "id": "mob_2_2_2", "name": "Огненный тотем", "level": 7, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_2_1", "distance": 25 },
+            { "to": "loc_2_3", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_2_3",
+          "name": "Лагерь вождя",
+          "type": "combat",
+          "level_range": { "min": 9, "max": 10 },
+          "description": "Личный лагерь гоблинского вождя. Финальная битва региона.",
+          "coord": { "x": 850, "y": 500 },
+          "mobs": [
+            { "id": "mob_2_3_0", "name": "Гоблин-телохранитель", "level": 9, "type": "elite" },
+            { "id": "mob_2_3_1", "name": "Гоблин-вождь", "level": 10, "type": "boss" }
+          ],
+          "roads": [
+            { "to": "loc_2_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_2_4",
+          "name": "Стоянка торговца",
+          "type": "peaceful",
+          "level_range": null,
+          "description": "Безопасная зона. Странствующий торговец предлагает редкие товары.",
+          "coord": { "x": 650, "y": 320 },
+          "mobs": [],
+          "npcs": ["Странствующий торговец Марко"],
+          "roads": [
+            { "to": "loc_2_0", "distance": 18 }
+          ]
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_2_3",
+        "to_region": 3,
+        "to_location": "loc_3_0",
+        "distance": 50,
+        "description": "Тропа от лагеря вождя ведёт к Проклятому кладбищу"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Проклятое кладбище",
+      "type": "wilderness",
+      "level_range": { "min": 10, "max": 15 },
+      "description": "Древнее кладбище, где нежить поднялась из могил.",
+      "coordinates": { "x": 850, "y": 300 },
+      "connections_to_regions": [2, 4],
+      "locations": [
+        {
+          "id": "loc_3_0",
+          "name": "Могильные ряды",
+          "type": "combat",
+          "level_range": { "min": 10, "max": 11 },
+          "description": "Старые захоронения. Скелеты и зомби бродят между могил.",
+          "coord": { "x": 800, "y": 250 },
+          "mobs": [
+            { "id": "mob_3_0_0", "name": "Скелет-воин", "level": 10, "type": "normal" },
+            { "id": "mob_3_0_1", "name": "Зомби", "level": 10, "type": "normal" },
+            { "id": "mob_3_0_2", "name": "Скелет-лучник", "level": 11, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_3_1", "distance": 25 },
+            { "to": "loc_3_4", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_3_1",
+          "name": "Склепы знати",
+          "type": "combat",
+          "level_range": { "min": 11, "max": 13 },
+          "description": "Фамильные склепы. Обитель рыцарей-призраков.",
+          "coord": { "x": 880, "y": 200 },
+          "mobs": [
+            { "id": "mob_3_1_0", "name": "Рыцарь-призрак", "level": 12, "type": "normal" },
+            { "id": "mob_3_1_1", "name": "Призрачный командир", "level": 13, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_3_0", "distance": 25 },
+            { "to": "loc_3_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_3_2",
+          "name": "Часовня",
+          "type": "combat",
+          "level_range": { "min": 12, "max": 14 },
+          "description": "Осквернённая часовня. Некромант проводит свои ритуалы.",
+          "coord": { "x": 920, "y": 280 },
+          "mobs": [
+            { "id": "mob_3_2_0", "name": "Некромант-ученик", "level": 12, "type": "normal" },
+            { "id": "mob_3_2_1", "name": "Некромант", "level": 13, "type": "elite" },
+            { "id": "mob_3_2_2", "name": "Восставший страж", "level": 13, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_3_1", "distance": 22 },
+            { "to": "loc_3_3", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_3_3",
+          "name": "Катакомбы",
+          "type": "combat",
+          "level_range": { "min": 14, "max": 15 },
+          "description": "Глубинные катакомбы. Финальный босс региона ждёт в конце.",
+          "coord": { "x": 950, "y": 340 },
+          "mobs": [
+            { "id": "mob_3_3_0", "name": "Костяной страж", "level": 14, "type": "elite" },
+            { "id": "mob_3_3_1", "name": "Повелитель катакомб", "level": 15, "type": "boss" }
+          ],
+          "roads": [
+            { "to": "loc_3_2", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_3_4",
+          "name": "Забытая крипта",
+          "type": "dungeon",
+          "level_range": { "min": 12, "max": 15 },
+          "description": "Средней сложности данж: загадки, усиленные скелеты, элитный некромант-страж.",
+          "coord": { "x": 750, "y": 180 },
+          "mobs": [
+            { "id": "mob_3_4_0", "name": "Усиленный скелет", "level": 13, "type": "normal" },
+            { "id": "mob_3_4_1", "name": "Костяной голем", "level": 14, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_3_0", "distance": 30 }
+          ],
+          "dungeon_info": {
+            "difficulty": "medium",
+            "boss": {
+              "id": "boss_3_4",
+              "name": "Некромант-страж",
+              "level": 15,
+              "type": "elite",
+              "phases": [
+                {
+                  "phase": 1,
+                  "name": "Призыв мертвецов",
+                  "description": "Некромант призывает скелетов каждые 3 хода",
+                  "hp_percent": 100
+                },
+                {
+                  "phase": 2,
+                  "name": "Тёмный щит",
+                  "description": "На 60% HP активирует магический щит, снижающий урон вдвое",
+                  "hp_percent": 60
+                },
+                {
+                  "phase": 3,
+                  "name": "Ритуал одержимости",
+                  "description": "На 25% HP входит в berserk-режим, удваивая атаку",
+                  "hp_percent": 25
+                }
+              ]
+            },
+            "recommended_party_size": "2-3 игрока",
+            "loot_table": ["Кираса Кровавого Дуба", "Кольцо Иссохшего Короля"]
+          }
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_3_3",
+        "to_region": 4,
+        "to_location": "loc_4_0",
+        "distance": 45,
+        "description": "Выход из катакомб ведёт в Ядовитые болота"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Ядовитые болота",
+      "type": "wilderness",
+      "level_range": { "min": 15, "max": 20 },
+      "description": "Токсичные болота, где выживают только самые стойкие.",
+      "coordinates": { "x": 1000, "y": 450 },
+      "connections_to_regions": [3, 5],
+      "locations": [
+        {
+          "id": "loc_4_0",
+          "name": "Топи",
+          "type": "combat",
+          "level_range": { "min": 15, "max": 16 },
+          "description": "Вязкие топи на входе в болота. Ядовитые жабы и слизни.",
+          "coord": { "x": 1000, "y": 400 },
+          "mobs": [
+            { "id": "mob_4_0_0", "name": "Ядовитая жаба", "level": 15, "type": "normal" },
+            { "id": "mob_4_0_1", "name": "Болотный слизень", "level": 15, "type": "normal" },
+            { "id": "mob_4_0_2", "name": "Токсичный сплавень", "level": 16, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_4_1", "distance": 25 },
+            { "to": "loc_4_3", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_4_1",
+          "name": "Утонувшая деревня",
+          "type": "combat",
+          "level_range": { "min": 16, "max": 18 },
+          "description": "Остатки деревни, поглощённой болотом. Утопленники бродят среди руин.",
+          "coord": { "x": 1080, "y": 450 },
+          "mobs": [
+            { "id": "mob_4_1_0", "name": "Утопленник", "level": 16, "type": "normal" },
+            { "id": "mob_4_1_1", "name": "Утопленник-староста", "level": 17, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_4_0", "distance": 25 },
+            { "to": "loc_4_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_4_2",
+          "name": "Логово ведьмы",
+          "type": "combat",
+          "level_range": { "min": 18, "max": 19 },
+          "description": "Избушка болотной ведьмы. Опаснейшая зона региона.",
+          "coord": { "x": 1150, "y": 500 },
+          "mobs": [
+            { "id": "mob_4_2_0", "name": "Болотный фамильяр", "level": 18, "type": "normal" },
+            { "id": "mob_4_2_1", "name": "Болотная ведьма", "level": 19, "type": "boss" }
+          ],
+          "roads": [
+            { "to": "loc_4_1", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_4_3",
+          "name": "Гнилой лес",
+          "type": "combat",
+          "level_range": { "min": 17, "max": 20 },
+          "description": "Мёртвый лес на краю болот. Пауки свили здесь огромные гнёзда.",
+          "coord": { "x": 1050, "y": 320 },
+          "mobs": [
+            { "id": "mob_4_3_0", "name": "Болотный паук", "level": 17, "type": "normal" },
+            { "id": "mob_4_3_1", "name": "Паук-птицеед", "level": 18, "type": "elite" },
+            { "id": "mob_4_3_2", "name": "Королева пауков", "level": 20, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_4_0", "distance": 28 }
+          ]
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_4_2",
+        "to_region": 5,
+        "to_location": "loc_5_0",
+        "distance": 50,
+        "description": "За болотной ведьмой начинается подъём в Ледяные горы"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Ледяные горы",
+      "type": "wilderness",
+      "level_range": { "min": 20, "max": 30 },
+      "description": "Суровые заснеженные горы. Холод и опасности подстерегают на каждом шагу.",
+      "coordinates": { "x": 800, "y": 100 },
+      "connections_to_regions": [4, 6],
+      "locations": [
+        {
+          "id": "loc_5_0",
+          "name": "Снежные перевалы",
+          "type": "combat",
+          "level_range": { "min": 20, "max": 22 },
+          "description": "Заснеженные тропы между вершинами. Волки и йети.",
+          "coord": { "x": 750, "y": 100 },
+          "mobs": [
+            { "id": "mob_5_0_0", "name": "Снежный волк", "level": 20, "type": "normal" },
+            { "id": "mob_5_0_1", "name": "Йети-одиночка", "level": 21, "type": "normal" },
+            { "id": "mob_5_0_2", "name": "Снежный альфа", "level": 22, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_5_1", "distance": 25 },
+            { "to": "loc_5_4", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_5_1",
+          "name": "Ледяные пещеры",
+          "type": "combat",
+          "level_range": { "min": 23, "max": 25 },
+          "description": "Система ледяных пещер. Элементали льда охраняют древние тайны.",
+          "coord": { "x": 850, "y": 80 },
+          "mobs": [
+            { "id": "mob_5_1_0", "name": "Ледяной элементаль", "level": 23, "type": "normal" },
+            { "id": "mob_5_1_1", "name": "Кристальный страж", "level": 24, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_5_0", "distance": 25 },
+            { "to": "loc_5_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_5_2",
+          "name": "Замёрзший храм",
+          "type": "combat",
+          "level_range": { "min": 26, "max": 28 },
+          "description": "Древний храм, погребённый подо льдом. Стражи-големы охраняют вход.",
+          "coord": { "x": 920, "y": 120 },
+          "mobs": [
+            { "id": "mob_5_2_0", "name": "Ледяной голем", "level": 26, "type": "normal" },
+            { "id": "mob_5_2_1", "name": "Рунический колосс", "level": 28, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_5_1", "distance": 22 },
+            { "to": "loc_5_3", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_5_3",
+          "name": "Вершина дракона",
+          "type": "combat",
+          "level_range": { "min": 29, "max": 30 },
+          "description": "Высочайшая вершина. Финальный босс региона — ледяной дракон.",
+          "coord": { "x": 950, "y": 180 },
+          "mobs": [
+            { "id": "mob_5_3_0", "name": "Ледяной дракон", "level": 30, "type": "boss" }
+          ],
+          "roads": [
+            { "to": "loc_5_2", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_5_4",
+          "name": "Ледяная бездна",
+          "type": "dungeon",
+          "level_range": { "min": 24, "max": 30 },
+          "description": "Сложный многоуровневый данж: ледяные ловушки-головоломки, элитные йети. Требует группу.",
+          "coord": { "x": 700, "y": 60 },
+          "mobs": [
+            { "id": "mob_5_4_0", "name": "Элитный йети", "level": 26, "type": "elite" },
+            { "id": "mob_5_4_1", "name": "Ледяной дух", "level": 27, "type": "normal" },
+            { "id": "mob_5_4_2", "name": "Повелитель вьюг", "level": 28, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_5_0", "distance": 30 }
+          ],
+          "dungeon_info": {
+            "difficulty": "hard",
+            "boss": {
+              "id": "boss_5_4",
+              "name": "Повелитель Ледяной Бездны",
+              "level": 30,
+              "type": "boss",
+              "phases": [
+                {
+                  "phase": 1,
+                  "name": "Ледяное дыхание",
+                  "description": "Атака по площади, замораживает игроков",
+                  "hp_percent": 100
+                },
+                {
+                  "phase": 2,
+                  "name": "Призыв бури",
+                  "description": "На 70% HP вызывает метель, снижающую видимость и точность",
+                  "hp_percent": 70
+                },
+                {
+                  "phase": 3,
+                  "name": "Сосульки-копья",
+                  "description": "На 40% HP обрушивает сосульки на случайные цели",
+                  "hp_percent": 40
+                },
+                {
+                  "phase": 4,
+                  "name": "Ярость вечной мерзлоты",
+                  "description": "На 15% HP входит в ярость, атаки наносят двойной урон",
+                  "hp_percent": 15
+                }
+              ]
+            },
+            "recommended_party_size": "3-5 игроков",
+            "loot_table": [
+              "Секира Бездонного Дуба",
+              "Алебарда Лунной Жатвы",
+              "Плащ Лунной Тени",
+              "Кольцо Вороньего Затмения"
+            ]
+          }
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_5_3",
+        "to_region": 6,
+        "to_location": "loc_6_0",
+        "distance": 45,
+        "description": "За спиной дракона открывается путь в Огненные земли"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Огненные земли",
+      "type": "wilderness",
+      "level_range": { "min": 30, "max": 40 },
+      "description": "Выжженная земля, где правят огненные элементали и демоны.",
+      "coordinates": { "x": 600, "y": 200 },
+      "connections_to_regions": [5, 7],
+      "locations": [
+        {
+          "id": "loc_6_0",
+          "name": "Лавовые поля",
+          "type": "combat",
+          "level_range": { "min": 30, "max": 32 },
+          "description": "Растрескавшаяся земля с потоками лавы. Огненные элементали.",
+          "coord": { "x": 600, "y": 200 },
+          "mobs": [
+            { "id": "mob_6_0_0", "name": "Огненный элементаль", "level": 30, "type": "normal" },
+            { "id": "mob_6_0_1", "name": "Магмовый слизень", "level": 31, "type": "normal" },
+            { "id": "mob_6_0_2", "name": "Пылающий колосс", "level": 32, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_6_1", "distance": 22 },
+            { "to": "loc_6_2", "distance": 25 }
+          ]
+        },
+        {
+          "id": "loc_6_1",
+          "name": "Кузница древних",
+          "type": "combat",
+          "level_range": { "min": 33, "max": 35 },
+          "description": "Древняя кузница, где автоматоны всё ещё куют оружие.",
+          "coord": { "x": 660, "y": 150 },
+          "mobs": [
+            { "id": "mob_6_1_0", "name": "Боевой автоматон", "level": 33, "type": "normal" },
+            { "id": "mob_6_1_1", "name": "Кузнечный голем", "level": 34, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_6_0", "distance": 22 },
+            { "to": "loc_6_3", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_6_2",
+          "name": "Пепельные руины",
+          "type": "combat",
+          "level_range": { "min": 36, "max": 38 },
+          "description": "Руины древнего города. Саламандры и демоны низшего ранга.",
+          "coord": { "x": 550, "y": 250 },
+          "mobs": [
+            { "id": "mob_6_2_0", "name": "Саламандра", "level": 36, "type": "normal" },
+            { "id": "mob_6_2_1", "name": "Бесплотный демон", "level": 37, "type": "normal" },
+            { "id": "mob_6_2_2", "name": "Пепельный лорд", "level": 38, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_6_0", "distance": 25 },
+            { "to": "loc_6_3", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_6_3",
+          "name": "Логово огненного лорда",
+          "type": "combat",
+          "level_range": { "min": 39, "max": 40 },
+          "description": "Цитадель огненного лорда. Финальный босс региона.",
+          "coord": { "x": 620, "y": 100 },
+          "mobs": [
+            { "id": "mob_6_3_0", "name": "Огненный лорд", "level": 40, "type": "boss" },
+            { "id": "mob_6_3_1", "name": "Пепельный страж", "level": 39, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_6_1", "distance": 28 },
+            { "to": "loc_6_2", "distance": 30 }
+          ]
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_6_2",
+        "to_region": 7,
+        "to_location": "loc_7_0",
+        "distance": 45,
+        "description": "Край пепельных руин граничит с Пустыней забытых"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Пустыня забытых",
+      "type": "wilderness",
+      "level_range": { "min": 40, "max": 50 },
+      "description": "Бескрайняя пустыня с древними гробницами и миражами.",
+      "coordinates": { "x": 350, "y": 200 },
+      "connections_to_regions": [6, 8],
+      "locations": [
+        {
+          "id": "loc_7_0",
+          "name": "Барханы",
+          "type": "combat",
+          "level_range": { "min": 40, "max": 42 },
+          "description": "Зыбучие пески. Песчаные черви атакуют из-под земли.",
+          "coord": { "x": 350, "y": 200 },
+          "mobs": [
+            { "id": "mob_7_0_0", "name": "Песчаный червь", "level": 40, "type": "normal" },
+            { "id": "mob_7_0_1", "name": "Песчаный скорпион", "level": 41, "type": "normal" },
+            { "id": "mob_7_0_2", "name": "Древний червь", "level": 42, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_7_1", "distance": 25 },
+            { "to": "loc_7_2", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_7_1",
+          "name": "Оазис миражей",
+          "type": "combat",
+          "level_range": { "min": 43, "max": 45 },
+          "description": "Оазис, полный иллюзий и мимиков. Ничему нельзя верить.",
+          "coord": { "x": 300, "y": 150 },
+          "mobs": [
+            { "id": "mob_7_1_0", "name": "Мимик-сундук", "level": 43, "type": "normal" },
+            { "id": "mob_7_1_1", "name": "Иллюзорный страж", "level": 44, "type": "elite" },
+            { "id": "mob_7_1_2", "name": "Песчаный дух", "level": 44, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_7_0", "distance": 25 },
+            { "to": "loc_7_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_7_2",
+          "name": "Гробницы фараонов",
+          "type": "combat",
+          "level_range": { "min": 46, "max": 48 },
+          "description": "Древние гробницы. Мумии и проклятые стражи.",
+          "coord": { "x": 240, "y": 200 },
+          "mobs": [
+            { "id": "mob_7_2_0", "name": "Мумия-страж", "level": 46, "type": "normal" },
+            { "id": "mob_7_2_1", "name": "Проклятый жрец", "level": 47, "type": "elite" },
+            { "id": "mob_7_2_2", "name": "Скорпион-гигант", "level": 47, "type": "normal" }
+          ],
+          "roads": [
+            { "to": "loc_7_0", "distance": 28 },
+            { "to": "loc_7_1", "distance": 22 },
+            { "to": "loc_7_3", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_7_3",
+          "name": "Храм забытых богов",
+          "type": "combat",
+          "level_range": { "min": 49, "max": 50 },
+          "description": "Величественный храм в центре пустыни. Финальный босс региона.",
+          "coord": { "x": 180, "y": 250 },
+          "mobs": [
+            { "id": "mob_7_3_0", "name": "Фараон-бог", "level": 50, "type": "boss" },
+            { "id": "mob_7_3_1", "name": "Жрец-фанатик", "level": 49, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_7_2", "distance": 30 }
+          ]
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_7_2",
+        "to_region": 8,
+        "to_location": "loc_8_0",
+        "distance": 50,
+        "description": "Подземный ход из гробниц ведёт в Тёмные земли"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Тёмные земли",
+      "type": "wilderness",
+      "level_range": { "min": 50, "max": 65 },
+      "description": "Земли, погружённые во тьму. Обитель высших демонов и порождений скверны.",
+      "coordinates": { "x": 250, "y": 400 },
+      "connections_to_regions": [7, 9],
+      "locations": [
+        {
+          "id": "loc_8_0",
+          "name": "Тенистые пустоши",
+          "type": "combat",
+          "level_range": { "min": 50, "max": 54 },
+          "description": "Мрачные равнины, где бродят порождения тьмы.",
+          "coord": { "x": 250, "y": 400 },
+          "mobs": [
+            { "id": "mob_8_0_0", "name": "Порождение тьмы", "level": 50, "type": "normal" },
+            { "id": "mob_8_0_1", "name": "Теневой гончий", "level": 52, "type": "normal" },
+            { "id": "mob_8_0_2", "name": "Мрак-душитель", "level": 54, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_8_1", "distance": 25 },
+            { "to": "loc_8_4", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_8_1",
+          "name": "Заброшенная крепость",
+          "type": "combat",
+          "level_range": { "min": 55, "max": 58 },
+          "description": "Павшая крепость ордена света. Падшие рыцари охраняют руины.",
+          "coord": { "x": 200, "y": 350 },
+          "mobs": [
+            { "id": "mob_8_1_0", "name": "Падший рыцарь", "level": 55, "type": "normal" },
+            { "id": "mob_8_1_1", "name": "Падший командир", "level": 57, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_8_0", "distance": 25 },
+            { "to": "loc_8_2", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_8_2",
+          "name": "Портал скверны",
+          "type": "combat",
+          "level_range": { "min": 59, "max": 62 },
+          "description": "Разлом в измерение демонов. Демоны высшего ранга выходят из портала.",
+          "coord": { "x": 150, "y": 420 },
+          "mobs": [
+            { "id": "mob_8_2_0", "name": "Демон высшего ранга", "level": 59, "type": "normal" },
+            { "id": "mob_8_2_1", "name": "Демон-разрушитель", "level": 61, "type": "elite" },
+            { "id": "mob_8_2_2", "name": "Повелитель портала", "level": 62, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_8_1", "distance": 22 },
+            { "to": "loc_8_3", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_8_3",
+          "name": "Обитель тёмного лорда",
+          "type": "combat",
+          "level_range": { "min": 63, "max": 65 },
+          "description": "Цитадель тёмного лорда. Финальный босс региона.",
+          "coord": { "x": 100, "y": 380 },
+          "mobs": [
+            { "id": "mob_8_3_0", "name": "Тёмный лорд", "level": 65, "type": "boss" }
+          ],
+          "roads": [
+            { "to": "loc_8_2", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_8_4",
+          "name": "Разлом скверны",
+          "type": "dungeon",
+          "level_range": { "min": 58, "max": 65 },
+          "description": "Эндгейм-сложность: портальные комнаты, элитные демоны, несколько фаз босса. Лучший лут в игре.",
+          "coord": { "x": 300, "y": 480 },
+          "mobs": [
+            { "id": "mob_8_4_0", "name": "Элитный демон", "level": 60, "type": "elite" },
+            { "id": "mob_8_4_1", "name": "Портальный страж", "level": 62, "type": "elite" },
+            { "id": "mob_8_4_2", "name": "Теневой палач", "level": 63, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_8_0", "distance": 30 }
+          ],
+          "dungeon_info": {
+            "difficulty": "hell",
+            "boss": {
+              "id": "boss_8_4",
+              "name": "Владыка Разлома",
+              "level": 65,
+              "type": "boss",
+              "phases": [
+                {
+                  "phase": 1,
+                  "name": "Теневой залп",
+                  "description": "Массовая атака тьмой, прожигает броню",
+                  "hp_percent": 100
+                },
+                {
+                  "phase": 2,
+                  "name": "Призыв из портала",
+                  "description": "На 80% HP открывает порталы, призывая демонов каждые 2 хода",
+                  "hp_percent": 80
+                },
+                {
+                  "phase": 3,
+                  "name": "Сфера разрушения",
+                  "description": "На 50% HP создает сферу, накапливающую урон и взрывающуюся",
+                  "hp_percent": 50
+                },
+                {
+                  "phase": 4,
+                  "name": "Истинная форма",
+                  "description": "На 25% HP принимает истинную форму, все характеристики удваиваются",
+                  "hp_percent": 25
+                },
+                {
+                  "phase": 5,
+                  "name": "Финал: Слияние с разломом",
+                  "description": "На 10% HP полностью сливается с порталом, атакует хаотично",
+                  "hp_percent": 10
+                }
+              ]
+            },
+            "recommended_party_size": "5 игроков",
+            "loot_table": [
+              "Молот Громовержца",
+              "Цепь Клятвы Могильщика",
+              "Доспех Рунных Шипов",
+              "Цепи Тёмного Лорда",
+              "Корона Увядших Шипов"
+            ]
+          }
+        }
+      ],
+      "exit_to_region": {
+        "from": "loc_8_3",
+        "to_region": 9,
+        "to_location": "loc_9_0",
+        "distance": 45,
+        "description": "Путь за цитадель тёмного лорда ведёт к Замку Бездны"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Замок Бездны",
+      "type": "wilderness",
+      "level_range": { "min": 65, "max": 80 },
+      "description": "Финальная зона игры. Цитадель абсолютной тьмы, где обитает финальный босс.",
+      "coordinates": { "x": 100, "y": 600 },
+      "connections_to_regions": [8],
+      "locations": [
+        {
+          "id": "loc_9_0",
+          "name": "Внешние стены",
+          "type": "combat",
+          "level_range": { "min": 65, "max": 68 },
+          "description": "Огромные крепостные стены. Элитная стража охраняет подходы.",
+          "coord": { "x": 100, "y": 550 },
+          "mobs": [
+            { "id": "mob_9_0_0", "name": "Элитный страж Бездны", "level": 65, "type": "elite" },
+            { "id": "mob_9_0_1", "name": "Страж-капитан", "level": 67, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_9_1", "distance": 25 },
+            { "to": "loc_9_2", "distance": 28 }
+          ]
+        },
+        {
+          "id": "loc_9_1",
+          "name": "Тронный зал",
+          "type": "combat",
+          "level_range": { "min": 69, "max": 72 },
+          "description": "Огромный тронный зал. Придворные демоны и прислужники тьмы.",
+          "coord": { "x": 160, "y": 600 },
+          "mobs": [
+            { "id": "mob_9_1_0", "name": "Придворный демон", "level": 69, "type": "normal" },
+            { "id": "mob_9_1_1", "name": "Демон-советник", "level": 71, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_9_0", "distance": 25 },
+            { "to": "loc_9_2", "distance": 22 },
+            { "to": "loc_9_3", "distance": 30 }
+          ]
+        },
+        {
+          "id": "loc_9_2",
+          "name": "Подземелья замка",
+          "type": "combat",
+          "level_range": { "min": 73, "max": 76 },
+          "description": "Глубокие подземелья. Бывшие узники превратились в мобов.",
+          "coord": { "x": 50, "y": 620 },
+          "mobs": [
+            { "id": "mob_9_2_0", "name": "Узник-призрак", "level": 73, "type": "normal" },
+            { "id": "mob_9_2_1", "name": "Тюремный палач", "level": 75, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_9_0", "distance": 28 },
+            { "to": "loc_9_1", "distance": 22 }
+          ]
+        },
+        {
+          "id": "loc_9_3",
+          "name": "Бездна",
+          "type": "combat",
+          "level_range": { "min": 77, "max": 80 },
+          "description": "Сердце тьмы. Финальный босс всей игры ожидает здесь.",
+          "coord": { "x": 200, "y": 680 },
+          "mobs": [
+            { "id": "mob_9_3_0", "name": "Финальный босс — Властелин Бездны", "level": 80, "type": "boss" },
+            { "id": "mob_9_3_1", "name": "Тень Властелина", "level": 78, "type": "elite" }
+          ],
+          "roads": [
+            { "to": "loc_9_1", "distance": 30 }
+          ]
+        }
+      ]
+    }
+  ]
+}

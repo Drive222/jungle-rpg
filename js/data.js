@@ -8,6 +8,7 @@ window.HERO_CLASSES = {
         hp: 120,
         minDamage: 35,
         maxDamage: 50,
+        speed: 95,
         spriteIdle: "assets/heroes/warrior/idle.png",
         spriteAttack: "assets/heroes/warrior/attack.png"
     },
@@ -16,6 +17,7 @@ window.HERO_CLASSES = {
         hp: 90,
         minDamage: 45,
         maxDamage: 65,
+        speed: 100,
         spriteIdle: "assets/heroes/mage/idle.png",
         spriteAttack: "assets/heroes/mage/attack.png"
     },
@@ -24,6 +26,7 @@ window.HERO_CLASSES = {
         hp: 100,
         minDamage: 40,
         maxDamage: 60,
+        speed: 105,
         spriteIdle: "assets/heroes/archer/idle.png",
         spriteAttack: "assets/heroes/archer/attack.png"
     }
@@ -32,6 +35,7 @@ window.HERO_CLASSES = {
 window.MONSTERS = {
     dire_wolf: {
         name: "🐺 Лютоволк Чернолесья",
+        cssClass: "wolf",
         category: "beast",
         description: "Хищник с глазами цвета болотного огня, преследующий раненых в туманной чаще.",
         hp: 82,
@@ -39,14 +43,15 @@ window.MONSTERS = {
         maxAttack: 34,
         defense: 2,
         chance: 28,
-        spriteIdle: "assets/monsters/dire_wolf/idle.svg",
-        spriteAttack: "assets/monsters/dire_wolf/attack.svg",
+        spriteIdle: "assets/monsters/wolf/idle.png",
+        spriteAttack: "assets/monsters/wolf/attack.png",
         abilities: [
             { name: "Рваная рана", effect: "bleed", chance: 0.35, damage: 4, turns: 2 }
         ]
     },
     gravebound_soldier: {
         name: "🪦 Праховый Ратник",
+        cssClass: "goblin",
         category: "undead",
         description: "Поднятый проклятием страж руин, закованный в ржавые пластины.",
         hp: 118,
@@ -54,14 +59,15 @@ window.MONSTERS = {
         maxAttack: 38,
         defense: 5,
         chance: 22,
-        spriteIdle: "assets/monsters/gravebound_soldier/idle.svg",
-        spriteAttack: "assets/monsters/gravebound_soldier/attack.svg",
+        spriteIdle: "assets/monsters/goblin/idle.png",
+        spriteAttack: "assets/monsters/goblin/attack.png",
         abilities: [
             { name: "Костяной щит", effect: "fortify", chance: 0.28, defenseBoost: 4, turns: 1 }
         ]
     },
     briar_cultist: {
         name: "🩸 Терновый Культист",
+        cssClass: "goblin",
         category: "cursed_human",
         description: "Безумец, связавший душу с корнями проклятого леса.",
         hp: 132,
@@ -69,14 +75,15 @@ window.MONSTERS = {
         maxAttack: 42,
         defense: 4,
         chance: 18,
-        spriteIdle: "assets/monsters/briar_cultist/idle.svg",
-        spriteAttack: "assets/monsters/briar_cultist/attack.svg",
+        spriteIdle: "assets/monsters/goblin/idle.png",
+        spriteAttack: "assets/monsters/goblin/attack.png",
         abilities: [
             { name: "Кровавый обет", effect: "enrage", chance: 0.3, minBoost: 4, maxBoost: 6, turns: 2 }
         ]
     },
     ash_imp: {
         name: "🔥 Пепельный Бес",
+        cssClass: "goblin",
         category: "demon",
         description: "Демон, рожденный из углей жертвенных костров в глубине руин.",
         hp: 96,
@@ -84,14 +91,15 @@ window.MONSTERS = {
         maxAttack: 44,
         defense: 3,
         chance: 20,
-        spriteIdle: "assets/monsters/ash_imp/idle.svg",
-        spriteAttack: "assets/monsters/ash_imp/attack.svg",
+        spriteIdle: "assets/monsters/goblin/idle.png",
+        spriteAttack: "assets/monsters/goblin/attack.png",
         abilities: [
             { name: "Ожог скверны", effect: "poison", chance: 0.32, damage: 5, turns: 2 }
         ]
     },
     gloom_wisp: {
         name: "🕯️ Морочная Искорь",
+        cssClass: "wolf",
         category: "arcane",
         description: "Сгусток древней магии, блуждающий между деревьев как блёклый фонарь.",
         hp: 168,
@@ -99,8 +107,8 @@ window.MONSTERS = {
         maxAttack: 50,
         defense: 6,
         chance: 12,
-        spriteIdle: "assets/monsters/gloom_wisp/idle.svg",
-        spriteAttack: "assets/monsters/gloom_wisp/attack.svg",
+        spriteIdle: "assets/monsters/wolf/idle.png",
+        spriteAttack: "assets/monsters/wolf/attack.png",
         abilities: [
             { name: "Мерцание", effect: "dodge", chance: 0.25, turns: 1 },
             { name: "Разлом маны", effect: "enrage", chance: 0.2, minBoost: 3, maxBoost: 5, turns: 2 }
@@ -111,13 +119,14 @@ window.MONSTERS = {
 window.BOSSES = {
     rootbound_colossus: {
         name: "🌲 Колосс Корнескверны",
+        cssClass: "wolf",
         description: "Исполин из камня и корней, пробужденный в сердце мёртвых руин.",
         hp: 420,
         minAttack: 42,
         maxAttack: 62,
         defense: 10,
-        spriteIdle: "assets/monsters/rootbound_colossus/idle.svg",
-        spriteAttack: "assets/monsters/rootbound_colossus/attack.svg",
+        spriteIdle: "assets/monsters/wolf/idle.png",
+        spriteAttack: "assets/monsters/wolf/attack.png",
         abilities: [
             { name: "Сотрясение рощи", effect: "bleed", chance: 0.4, damage: 8, turns: 2 },
             { name: "Кора древних", effect: "fortify", chance: 0.3, defenseBoost: 6, turns: 2 }
@@ -126,13 +135,14 @@ window.BOSSES = {
     },
     abyss_hart: {
         name: "🫀 Бездна-Олень Ноктравена",
+        cssClass: "goblin",
         description: "Рогатый дух охоты, чьё сердце бьётся в такт древнему проклятию.",
         hp: 520,
         minAttack: 48,
         maxAttack: 70,
         defense: 9,
-        spriteIdle: "assets/monsters/abyss_hart/idle.svg",
-        spriteAttack: "assets/monsters/abyss_hart/attack.svg",
+        spriteIdle: "assets/monsters/goblin/idle.png",
+        spriteAttack: "assets/monsters/goblin/attack.png",
         abilities: [
             { name: "Рывок затмения", effect: "dodge", chance: 0.35, turns: 1 },
             { name: "Лютый гон", effect: "enrage", chance: 0.3, minBoost: 6, maxBoost: 9, turns: 2 }
@@ -141,13 +151,14 @@ window.BOSSES = {
     },
     witch_queen_thorns: {
         name: "👑 Терновая Королева Морока",
+        cssClass: "goblin",
         description: "Древняя ведьма, чьи заклинания срослись с лесом и мраком.",
         hp: 640,
         minAttack: 52,
         maxAttack: 78,
         defense: 12,
-        spriteIdle: "assets/monsters/witch_queen_thorns/idle.svg",
-        spriteAttack: "assets/monsters/witch_queen_thorns/attack.svg",
+        spriteIdle: "assets/monsters/goblin/idle.png",
+        spriteAttack: "assets/monsters/goblin/attack.png",
         abilities: [
             { name: "Проклятая чума", effect: "poison", chance: 0.42, damage: 9, turns: 3 },
             { name: "Трон шипов", effect: "fortify", chance: 0.35, defenseBoost: 8, turns: 2 }

@@ -162,7 +162,7 @@ window.battle = (() => {
 
         state.monsterHp = combat.data.hp;
 
-        ui.monster.className = `monster ${combat.key}`;
+        ui.monster.className = `monster ${combat.data.cssClass || combat.key}`;
         ui.monster.style.backgroundImage = `url(${combat.data.spriteIdle})`;
         ui.monster.classList.remove("hidden");
 
@@ -187,9 +187,19 @@ window.battle = (() => {
             ui.writeLog(`☠️ ${combat.data.name} побеждён`);
             ui.writeLog(`❤️ У героя осталось ${state.heroHp} HP`);
 
+            const goldReward = combat.isBoss ? 45 : 12 + Math.floor(state.monsterCount / 5);
+            const crystalReward = combat.isBoss ? 6 : 2;
+
+            state.gold += goldReward;
+            state.crystals += crystalReward;
+            ui.updateCurrencies();
+
             if (combat.isBoss && combat.data.reward) {
                 ui.writeLog(`🎁 Награда: ${combat.data.reward}`);
             }
+
+            ui.writeLog(`🪙 Получено ${goldReward} золота`);
+            ui.writeLog(`🔷 Получено ${crystalReward} кристаллов`);
 
             const bestScore = Number(localStorage.getItem("bestScore") || 0);
             if (state.monsterCount > bestScore) {

@@ -8,6 +8,7 @@ window.state = {
        HERO
     ================================ */
     heroClass: null,
+    heroName: "",
 
     heroHp: 0,
     heroMaxHp: 0,
@@ -27,6 +28,9 @@ window.state = {
     ================================ */
     monsterHp: 0,
     monsterCount: 0,
+
+    gold: 0,
+    crystals: 0,
 
     fighting: false,
     selectedClassKey: null,
@@ -48,5 +52,10 @@ window.state = {
         cloak: null,
         legs: null,
         boots: null
-    }
+    },
+
+    /* ================================
+       MAP / LOCATION
+    ================================ */
+    currentLocation: "loc_0_0"
 };

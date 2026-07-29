@@ -1,0 +1,71 @@
+{
+  "region": "Ледяные горы",
+  "locations": [
+    {
+      "name": "Горный перевал",
+      "background": "mountain_pass.jpg",
+      "mobs": ["Снежный следопыт", "Скальный страж"],
+      "type": "wild"
+    },
+    {
+      "name": "Ледяная тропа",
+      "background": "icy_trail.jpg",
+      "mobs": ["Ледяной хищник", "Шумный ветер"],
+      "type": "wild"
+    },
+    {
+      "name": "Снежная выемка",
+      "background": "snow_basin.jpg",
+      "mobs": ["Снежный волк", "Скользкий тень"],
+      "type": "wild"
+    },
+    {
+      "name": "Чернокаменая стена",
+      "background": "black_stone_wall.jpg",
+      "mobs": ["Каменный великан", "Горный сторож"],
+      "type": "wild"
+    },
+    {
+      "name": "Зубчатый гребень",
+      "background": "serrated_ridge.jpg",
+      "mobs": ["Грозовой орёл", "Скальный краулер"],
+      "type": "wild"
+    },
+    {
+      "name": "Пещера Ветров",
+      "background": "wind_cave.jpg",
+      "mobs": ["Ветряной дух", "Ледяной страж"],
+      "type": "cave"
+    },
+    {
+      "name": "Подгорная стоянка",
+      "background": "foothill_camp.jpg",
+      "mobs": ["Горный путник", "Снежный разбойник"],
+      "type": "town"
+    },
+    {
+      "name": "Ледяной водопад",
+      "background": "ice_fall.jpg",
+      "mobs": ["Скользящий тролль", "Инейный дух"],
+      "type": "wild"
+    },
+    {
+      "name": "Воронья скала",
+      "background": "raven_rock.jpg",
+      "mobs": ["Вороний страж", "Каменный рогатый зверь"],
+      "type": "wild"
+    },
+    {
+      "name": "Белая пещера",
+      "background": "white_cave.jpg",
+      "mobs": ["Сияющий голем", "Ледяной дух"],
+      "type": "cave"
+    },
+    {
+      "name": "Застывший ручей",
+      "background": "frozen_stream.jpg",
+      "mobs": ["Снежный тролль", "Ледяная тень"],
+      "type": "wild"
+    }
+  ]
+}

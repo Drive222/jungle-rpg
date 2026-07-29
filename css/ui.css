@@ -24,11 +24,58 @@
     cursor: not-allowed;
 }
 
-.record {
+.top-hud {
     position: absolute;
+    top: 16px;
     right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    z-index: 10;
+}
+
+.record {
+    position: static;
     color: #ffd54f;
     font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.currency-hud {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.currency-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(8, 18, 28, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #f7f0d0;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.currency-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: block;
+}
+
+.currency-icon--crystal {
+    filter: drop-shadow(0 0 3px rgba(108, 195, 255, 0.5));
+}
+
+.currency-value {
+    min-width: 2ch;
+    text-align: right;
 }
 
 /* ================================
@@ -45,4 +92,216 @@
 
     margin: 0 12px 14px;
     border-radius: 6px;
+}
+
+/* ================================
+   MAP OVERLAY
+================================ */
+.map-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.map-board {
+    background: #0a1a24;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.map-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f7f0d0;
+}
+
+.map-close {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #f7f0d0;
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.map-close:hover {
+    background: rgba(255, 80, 80, 0.25);
+}
+
+.map-current-location {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #a0c4d8;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-weight: 500;
+}
+
+.map-image-container {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px;
+}
+
+.map-image {
+    max-width: 100%;
+    max-height: 55vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ================================
+   MAP LOCATIONS BUTTONS
+================================ */
+.map-locations {
+    padding: 14px 20px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.2);
+    max-height: 160px;
+    overflow-y: auto;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.map-location-btn {
+    flex: 0 0 auto;
+    min-width: 140px;
+    max-width: 200px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: #f7f0d0;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.map-location-btn:hover:not(:disabled) {
+    background: rgba(80, 160, 200, 0.25);
+    border-color: rgba(80, 160, 200, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.map-location-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.map-location-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f7f0d0;
+}
+
+.map-location-distance {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 400;
+}
+
+.map-no-locations {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+}
+
+/* ================================
+   TRAVEL OVERLAY
+================================ */
+.travel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+}
+
+.travel-panel {
+    background: #0a1a24;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 30px 40px;
+    min-width: 300px;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.travel-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.travel-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4a9bc7, #7ed4ad);
+    border-radius: 4px;
+    transition: width 0.1s linear;
+}
+
+.travel-text {
+    color: #f7f0d0;
+    font-size: 16px;
+    font-weight: 500;
 }

@@ -13,28 +13,208 @@
 </head>
 <body>
 
-<div class="game-title">
-    Grimwood
+<!-- ================================
+     MAIN MENU
+=============================== -->
+<div class="class-select" id="menuScreen">
+    <div class="menu-atmosphere"></div>
+
+    <!-- Title block — centered at top of screen -->
+    <div class="title-block">
+        <p class="menu-kicker">Dark Forest Chronicle</p>
+        <h1 class="menu-logo">GRIMWOOD</h1>
+        <p class="menu-subtitle">
+            Там, где лес давно поглотил свет, начинается путь нового охотника.
+        </p>
+    </div>
+
+    <!-- Hero image — large, left side, vertically centered -->
+    <img src="assets/heroes/Sqvad.png" class="hero-squad-image" alt="Герои Grimwood">
+
+    <!-- Menu buttons — right of image, vertically centered -->
+    <div class="menu-buttons">
+        <button class="menu-action-btn" data-open-modal="newCharacterModal">Новый персонаж</button>
+        <button class="menu-action-btn" data-open-modal="continueModal">Продолжить</button>
+        <button class="menu-action-btn" data-open-modal="shopModal">Магазин</button>
+        <button class="menu-action-btn" data-open-modal="authorsModal">Авторы</button>
+    </div>
 </div>
 
 <!-- ================================
-     CLASS SELECTION SCREEN
+     MODALS
 ================================ -->
-<div class="class-select" id="classSelect">
-    <h2>Выбери класс</h2>
+<div class="menu-modal-layer hidden" id="menuModalLayer">
+    <div class="menu-modal-backdrop" data-close-modal></div>
 
-    <div class="classes">
-        <button data-class="warrior">⚔️ Воин</button>
-        <button data-class="mage">🧙 Маг</button>
-        <button data-class="archer">🏹 Лучник</button>
-    </div>
+    <section class="menu-modal hidden" id="newCharacterModal">
+        <div class="menu-modal-panel menu-modal-panel--wide">
+            <button class="menu-modal-close" type="button" aria-label="Закрыть" data-close-modal>×</button>
 
-    <div class="class-preview hidden" id="classPreview">
-        <h3 id="previewName"></h3>
-        <p id="previewHp"></p>
-        <p id="previewDmg"></p>
-        <p class="hint">Нажми ещё раз, чтобы выбрать</p>
-    </div>
+            <div class="menu-modal-header">
+                <p class="menu-modal-kicker">Новый путь</p>
+                <h2>Создание персонажа</h2>
+            </div>
+
+            <div class="create-layout">
+                <div class="create-form">
+                    <label class="menu-field">
+                        <span>Имя персонажа</span>
+                        <input id="characterNameInput" type="text" maxlength="24" placeholder="Введите имя героя">
+                    </label>
+
+                    <div class="class-choice">
+                        <p class="class-choice__label">Выбор класса</p>
+
+                        <div class="class-grid">
+                            <button class="class-card is-selected" type="button" data-class-card="warrior">
+                                <span class="class-card__art class-card__art--warrior"></span>
+                                <span class="class-card__title">Воин</span>
+                                <span class="class-card__text">Высокое здоровье и мощные удары в ближнем бою.</span>
+                            </button>
+
+                            <button class="class-card" type="button" data-class-card="mage">
+                                <span class="class-card__art class-card__art--mage"></span>
+                                <span class="class-card__title">Маг</span>
+                                <span class="class-card__text">Сильная магия и самый высокий разовый урон.</span>
+                            </button>
+
+                            <button class="class-card" type="button" data-class-card="archer">
+                                <span class="class-card__art class-card__art--archer"></span>
+                                <span class="class-card__title">Лучник</span>
+                                <span class="class-card__text">Точный урон и уверенный темп боя издалека.</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="character-preview-panel">
+                    <p class="character-preview-panel__label">Предпросмотр</p>
+                    <div class="character-preview-sprite" id="createPreviewSprite"></div>
+                    <h3 class="character-preview-name" id="createPreviewName">Странник</h3>
+                    <p class="character-preview-class" id="createPreviewClass">Воин</p>
+
+                    <div class="character-preview-stats">
+                        <div><span>HP</span><strong id="createPreviewHp">120</strong></div>
+                        <div><span>Урон</span><strong id="createPreviewDmg">35 - 50</strong></div>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="menu-modal-footer">
+                <button class="menu-action-btn menu-action-btn--ghost" type="button" data-close-modal>Назад</button>
+                <button class="menu-action-btn menu-action-btn--primary" id="createCharacterBtn" type="button">Создать персонажа</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-modal hidden" id="continueModal">
+        <div class="menu-modal-panel menu-modal-panel--wide">
+            <button class="menu-modal-close" type="button" aria-label="Закрыть" data-close-modal>×</button>
+
+            <div class="menu-modal-header">
+                <p class="menu-modal-kicker">Тлеющая летопись</p>
+                <h2>Выбор персонажа</h2>
+            </div>
+
+            <div class="slot-grid">
+                <article class="slot-card">
+                    <div class="slot-card__frame">I</div>
+                    <h3>Слот 1</h3>
+                    <p>Пустой слот</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button" disabled>Играть</button>
+                </article>
+
+                <article class="slot-card">
+                    <div class="slot-card__frame">II</div>
+                    <h3>Слот 2</h3>
+                    <p>Пустой слот</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button" disabled>Играть</button>
+                </article>
+
+                <article class="slot-card">
+                    <div class="slot-card__frame">III</div>
+                    <h3>Слот 3</h3>
+                    <p>Пустой слот</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button" disabled>Играть</button>
+                </article>
+            </div>
+
+            <div class="menu-modal-footer menu-modal-footer--center">
+                <button class="menu-action-btn menu-action-btn--ghost" type="button" data-close-modal>Назад</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-modal hidden" id="shopModal">
+        <div class="menu-modal-panel menu-modal-panel--wide">
+            <button class="menu-modal-close" type="button" aria-label="Закрыть" data-close-modal>×</button>
+
+            <div class="menu-modal-header">
+                <p class="menu-modal-kicker">Таверна редкостей</p>
+                <h2>Магазин</h2>
+            </div>
+
+            <div class="shop-grid">
+                <article class="shop-card">
+                    <div class="shop-card__icon">P</div>
+                    <h3>Скин Паладина</h3>
+                    <p>490 золота</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button">Купить</button>
+                </article>
+
+                <article class="shop-card">
+                    <div class="shop-card__icon">N</div>
+                    <h3>Скин Некроманта</h3>
+                    <p>520 золота</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button">Купить</button>
+                </article>
+
+                <article class="shop-card">
+                    <div class="shop-card__icon">A</div>
+                    <h3>Класс Ассасин</h3>
+                    <p>850 золота</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button">Купить</button>
+                </article>
+
+                <article class="shop-card">
+                    <div class="shop-card__icon">P</div>
+                    <h3>Класс Паладин</h3>
+                    <p>900 золота</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button">Купить</button>
+                </article>
+
+                <article class="shop-card">
+                    <div class="shop-card__icon">N</div>
+                    <h3>Класс Некромант</h3>
+                    <p>940 золота</p>
+                    <button class="menu-action-btn menu-action-btn--small" type="button">Купить</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-modal hidden" id="authorsModal">
+        <div class="menu-modal-panel">
+            <button class="menu-modal-close" type="button" aria-label="Закрыть" data-close-modal>×</button>
+
+            <div class="menu-modal-header">
+                <p class="menu-modal-kicker">Chronicle</p>
+                <h2>Grimwood</h2>
+            </div>
+
+            <div class="authors-list">
+                <div><span>Version</span><strong>0.1</strong></div>
+                <div><span>Programming</span><strong>Atai</strong></div>
+                <div><span>Graphics</span><strong>Coming Soon</strong></div>
+                <div><span>Music</span><strong>Coming Soon</strong></div>
+                <div><span>Special Thanks</span><strong>The forest remembers.</strong></div>
+            </div>
+
+            <div class="menu-modal-footer menu-modal-footer--center">
+                <button class="menu-action-btn menu-action-btn--ghost" type="button" data-close-modal>Закрыть</button>
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- ================================
@@ -61,9 +241,23 @@
         <button id="fightBtn">⚔️ В БОЙ</button>
         <button id="reviveBtn" class="hidden">🔁 Возродиться</button>
         <button id="inventoryBtn">🎒 Инвентарь</button>
+        <button id="mapBtn">🗺️ Карта</button>
 
-        <div class="record" id="record">
-            🏆 Рекорд: 0
+        <div class="top-hud">
+            <div class="record" id="record">
+                🏆 Рекорд: 0
+            </div>
+
+            <div class="currency-hud" id="currencyHud">
+                <div class="currency-chip">
+                    <img class="currency-icon" src="assets/icons/gold_coin.png" alt="Золото">
+                    <span class="currency-value" id="goldValue">0</span>
+                </div>
+                <div class="currency-chip">
+                    <img class="currency-icon currency-icon--crystal" src="assets/icons/cristall.png" alt="Кристалл">
+                    <span class="currency-value" id="crystalValue">0</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -71,8 +265,40 @@
 </div>
 
 <!-- ================================
+     MAP OVERLAY
+=============================== -->
+<div class="map-overlay hidden" id="mapOverlay">
+    <div class="map-board">
+        <div class="map-header">
+            <h2>🗺️ Карта мира</h2>
+            <button class="map-close" id="mapCloseBtn">✕</button>
+        </div>
+
+        <div class="map-current-location" id="mapCurrentLocation">📍 Загрузка...</div>
+
+        <div class="map-image-container">
+            <img id="mapImage" src="assets/map/map.png" alt="Карта мира Grimwood" class="map-image">
+        </div>
+
+        <div class="map-locations" id="mapLocations">
+            <!-- Кнопки локаций будут сгенерированы динамически -->
+        </div>
+    </div>
+
+    <!-- Оверлей перехода -->
+    <div class="travel-overlay hidden" id="travelOverlay">
+        <div class="travel-panel">
+            <div class="travel-progress-bar">
+                <div class="travel-progress-fill" id="travelBar"></div>
+            </div>
+            <p class="travel-text" id="travelText">🚶 Переход...</p>
+        </div>
+    </div>
+</div>
+
+<!-- ================================
      INVENTORY
-================================ -->
+=============================== -->
 <div class="inventory-overlay hidden" id="inventoryOverlay">
 
     <div class="inventory-board">
@@ -121,6 +347,7 @@
 <script src="js/ui.js?v=20260213"></script>
 <script src="js/inventory.js?v=20260213"></script>
 <script src="js/battle.js?v=20260213"></script>
+<script src="js/map.js?v=20260213"></script>
 <script src="js/game.js?v=20260213"></script>
 
 </body>

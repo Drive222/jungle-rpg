@@ -1,0 +1,65 @@
+{
+  "region": "Большой лес",
+  "locations": [
+    {
+      "name": "Деревня Гримвуд",
+      "background": "forest_village.jpg",
+      "mobs": ["Лесной сторож", "Старый житель"],
+      "type": "town"
+    },
+    {
+      "name": "Большой лес",
+      "background": "deep_forest.jpg",
+      "mobs": ["Теневой зверь", "Древний страж"],
+      "type": "wild"
+    },
+    {
+      "name": "Волчья чаща",
+      "background": "wolf_thicket.jpg",
+      "mobs": ["Стая волков", "Бешеный хищник"],
+      "type": "wild"
+    },
+    {
+      "name": "Старое пастбище",
+      "background": "old_pasture.jpg",
+      "mobs": ["Оборванный скиталец", "Дикий пёс"],
+      "type": "wild"
+    },
+    {
+      "name": "Охотничьи угодья",
+      "background": "hunting_ground.jpg",
+      "mobs": ["Лесной охотник", "Пугливый кабан"],
+      "type": "wild"
+    },
+    {
+      "name": "Лесной ручей",
+      "background": "forest_stream.jpg",
+      "mobs": ["Зубастая лягушка", "Туманная нимфа"],
+      "type": "wild"
+    },
+    {
+      "name": "Древний дуб",
+      "background": "ancient_oak.jpg",
+      "mobs": ["Корневой страж", "Старый дух"],
+      "type": "wild"
+    },
+    {
+      "name": "Заброшенная сторожевая башня",
+      "background": "ruined_watchtower.jpg",
+      "mobs": ["Потерянный страж", "Тень в окне"],
+      "type": "ruins"
+    },
+    {
+      "name": "Пещера охотников",
+      "background": "hunter_cave.jpg",
+      "mobs": ["Пещерный зверь", "Каменный голем"],
+      "type": "cave"
+    },
+    {
+      "name": "Каменный перевал",
+      "background": "stone_pass.jpg",
+      "mobs": ["Скальный бродяга", "Каменистый страж"],
+      "type": "wild"
+    }
+  ]
+}

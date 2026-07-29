@@ -1,0 +1,65 @@
+{
+  "region": "Проклятые болота",
+  "locations": [
+    {
+      "name": "Гнилое болото",
+      "background": "rot_marsh.jpg",
+      "mobs": ["Болотный клерк", "Трясинный страж"],
+      "type": "wild"
+    },
+    {
+      "name": "Сторожка на сваях",
+      "background": "stilt_hut.jpg",
+      "mobs": ["Болотный сторож", "Костлявый лодочник"],
+      "type": "town"
+    },
+    {
+      "name": "Топь-перевал",
+      "background": "marsh_pass.jpg",
+      "mobs": ["Туманная фигура", "Слизистый хищник"],
+      "type": "wild"
+    },
+    {
+      "name": "Кузнечный мост",
+      "background": "smith_bridge.jpg",
+      "mobs": ["Болотный мастер", "Старый кузнец"],
+      "type": "trader"
+    },
+    {
+      "name": "Туманное озеро",
+      "background": "mist_lake.jpg",
+      "mobs": ["Призрачный пловец", "Летучий труп"],
+      "type": "wild"
+    },
+    {
+      "name": "Пепельные кочки",
+      "background": "ash_bumps.jpg",
+      "mobs": ["Пепельный вепрь", "Сгоревший дух"],
+      "type": "wild"
+    },
+    {
+      "name": "Сырой вал",
+      "background": "wet_ridge.jpg",
+      "mobs": ["Сырой охотник", "Кривой страж"],
+      "type": "wild"
+    },
+    {
+      "name": "Осоковое кладбище",
+      "background": "reed_graveyard.jpg",
+      "mobs": ["Болотный мертвец", "Тихий призрак"],
+      "type": "wild"
+    },
+    {
+      "name": "Черный тростник",
+      "background": "black_reed.jpg",
+      "mobs": ["Тростниковый ворон", "Гнилой страж"],
+      "type": "wild"
+    },
+    {
+      "name": "Моховой пригорок",
+      "background": "moss_hill.jpg",
+      "mobs": ["Моховой зверь", "Паутина тумана"],
+      "type": "wild"
+    }
+  ]
+}

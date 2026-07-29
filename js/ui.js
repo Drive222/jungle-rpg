@@ -9,6 +9,8 @@ window.ui = {
     fightBtn: null,
     reviveBtn: null,
     recordEl: null,
+    goldValueEl: null,
+    crystalValueEl: null,
 
     init() {
         this.hero = document.getElementById("hero");
@@ -17,6 +19,9 @@ window.ui = {
         this.fightBtn = document.getElementById("fightBtn");
         this.reviveBtn = document.getElementById("reviveBtn");
         this.recordEl = document.getElementById("record");
+        this.goldValueEl = document.getElementById("goldValue");
+        this.crystalValueEl = document.getElementById("crystalValue");
+        this.updateCurrencies();
     },
 
     /* ================================
@@ -35,6 +40,19 @@ window.ui = {
         void el.offsetWidth; // перезапуск анимации
         el.classList.add("attack");
         el.style.backgroundImage = `url(${sprite})`;
+    },
+
+    /* ================================
+       CURRENCIES
+    ================================ */
+    updateCurrencies() {
+        if (this.goldValueEl) {
+            this.goldValueEl.textContent = String(state.gold || 0);
+        }
+
+        if (this.crystalValueEl) {
+            this.crystalValueEl.textContent = String(state.crystals || 0);
+        }
     },
 
     /* ================================
