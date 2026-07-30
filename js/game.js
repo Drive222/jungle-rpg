@@ -18,10 +18,11 @@ async function loadGrimwoodData() {
 document.addEventListener("DOMContentLoaded", async () => {
     ui.init();
     inventory.init();
-    mapModule.init();
 
-    // Загружаем данные карты
+    // Загружаем данные карты ДО инициализации карты
     await loadGrimwoodData();
+
+    mapModule.init();
 
     const inventoryBtn = document.getElementById("inventoryBtn");
     const mapBtn = document.getElementById("mapBtn");

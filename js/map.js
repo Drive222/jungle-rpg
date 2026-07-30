@@ -310,7 +310,7 @@ window.mapModule = {
 
         // Устанавливаем изображение карты
         if (this.mapImage) {
-            this.mapImage.src = "assets/map/map.png";
+            this.mapImage.src = "assets/map/map.webp";
             this.mapImage.alt = "Карта мира Grimwood";
             // Скрываем индикатор загрузки после загрузки изображения
             this.mapImage.onload = () => {

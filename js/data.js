@@ -170,12 +170,12 @@ window.BOSSES = {
    ITEMS
 ================================ */
 
-const ITEMS = {
+window.ITEMS = {
     potion_small: {
         id: "potion_small",
         name: "Малое зелье лечения",
         description: "Восстанавливает 30 HP.",
-        icon: "assets/items/potion_red.png",
+        icon: "assets/items/potion_red.webp",
         type: "consumable",
         stackable: true,
         maxStack: 5
