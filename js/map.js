@@ -7,6 +7,7 @@ window.mapModule = {
     overlay: null,
     closeBtn: null,
     mapImage: null,
+    mapImageContainer: null,
     locationsContainer: null,
     travelOverlay: null,
     travelBar: null,
@@ -15,6 +16,18 @@ window.mapModule = {
     isOpen: false,
     isTraveling: false,
     travelTimer: null,
+
+    // Zoom & drag state
+    scale: 1,
+    minScale: 1,
+    maxScale: 3,
+    translateX: 0,
+    translateY: 0,
+    isDragging: false,
+    dragStartX: 0,
+    dragStartY: 0,
+    dragStartTranslateX: 0,
+    dragStartTranslateY: 0,
 
     /* ================================
        INIT
@@ -48,6 +61,83 @@ window.mapModule = {
                 this.close();
             }
         });
+
+        // Инициализация зума и перетаскивания
+        this.initZoomAndDrag();
+    },
+
+    /* ================================
+       ZOOM & DRAG
+    ================================ */
+    initZoomAndDrag() {
+        this.mapImageContainer = document.querySelector(".map-image-container");
+        if (!this.mapImageContainer) return;
+
+        // Wheel zoom
+        this.mapImageContainer.addEventListener("wheel", (e) => {
+            e.preventDefault();
+            const rect = this.mapImageContainer.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            const newScale = Math.min(this.maxScale, Math.max(this.minScale, this.scale + delta));
+
+            if (newScale !== this.scale) {
+                // Zoom towards mouse pointer
+                const scaleRatio = newScale / this.scale;
+                this.translateX = mouseX - scaleRatio * (mouseX - this.translateX);
+                this.translateY = mouseY - scaleRatio * (mouseY - this.translateY);
+                this.scale = newScale;
+                this.applyTransform();
+            }
+        }, { passive: false });
+
+        // Mouse drag
+        this.mapImageContainer.addEventListener("mousedown", (e) => {
+            if (e.button !== 0) return;
+            this.isDragging = true;
+            this.dragStartX = e.clientX;
+            this.dragStartY = e.clientY;
+            this.dragStartTranslateX = this.translateX;
+            this.dragStartTranslateY = this.translateY;
+            this.mapImageContainer.classList.add("dragging");
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!this.isDragging) return;
+            const dx = e.clientX - this.dragStartX;
+            const dy = e.clientY - this.dragStartY;
+            this.translateX = this.dragStartTranslateX + dx;
+            this.translateY = this.dragStartTranslateY + dy;
+            this.applyTransform();
+        });
+
+        document.addEventListener("mouseup", () => {
+            if (this.isDragging) {
+                this.isDragging = false;
+                this.mapImageContainer.classList.remove("dragging");
+            }
+        });
+    },
+
+    applyTransform() {
+        if (!this.mapImage) return;
+        this.mapImage.style.transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
+    },
+
+    resetZoomAndDrag() {
+        this.scale = 1;
+        this.translateX = 0;
+        this.translateY = 0;
+        this.isDragging = false;
+        if (this.mapImage) {
+            this.mapImage.style.transform = "";
+            this.mapImage.style.transition = "transform 0.15s ease-out";
+        }
+        if (this.mapImageContainer) {
+            this.mapImageContainer.classList.remove("dragging");
+        }
     },
 
     /* ================================
@@ -304,6 +394,9 @@ window.mapModule = {
     ================================ */
     open() {
         if (this.isTraveling) return;
+
+        // Сбрасываем зум и позицию при каждом открытии
+        this.resetZoomAndDrag();
 
         this.overlay.classList.remove("hidden");
         this.isOpen = true;
