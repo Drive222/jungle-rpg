@@ -64,16 +64,17 @@ window.ui = {
 
         if (!bar || !text || state.heroMaxHp === 0) return;
 
+        const hp = Math.max(0, state.heroHp);
         const percent = Math.max(
             0,
-            (state.heroHp / state.heroMaxHp) * 100
+            (hp / state.heroMaxHp) * 100
         );
 
         // ширина
         bar.style.width = percent + "%";
 
         // текст
-        text.textContent = `${state.heroHp} / ${state.heroMaxHp}`;
+        text.textContent = `${hp} / ${state.heroMaxHp}`;
 
         // цвет
         bar.classList.remove("hp-good", "hp-mid", "hp-low");

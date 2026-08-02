@@ -277,12 +277,13 @@
         <div class="map-current-location" id="mapCurrentLocation">📍 Загрузка...</div>
 
         <div class="map-image-container">
-            <img id="mapImage" src="assets/map/map.webp" alt="Карта мира Grimwood" class="map-image">
+            <div class="map-image-frame">
+                <img id="mapImage" src="assets/map/map.webp" alt="Карта мира Grimwood" class="map-image">
+                <div class="map-pins-layer" id="mapPinsLayer"></div>
+            </div>
         </div>
 
-        <div class="map-locations" id="mapLocations">
-            <!-- Кнопки локаций будут сгенерированы динамически -->
-        </div>
+        <button class="map-view-toggle" id="mapViewToggleBtn">🌍 Карта мира</button>
     </div>
 
     <!-- Оверлей перехода -->

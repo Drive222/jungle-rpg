@@ -4,11 +4,15 @@
    ================================ */
 
 window.mapModule = {
+    REGION_MAP_DESIGN_WIDTH: 1200,
+    REGION_MAP_DESIGN_HEIGHT: 800,
+    WORLD_MAP_DESIGN_WIDTH: 1536,
+    WORLD_MAP_DESIGN_HEIGHT: 1024,
+
     overlay: null,
     closeBtn: null,
     mapImage: null,
-    mapImageContainer: null,
-    locationsContainer: null,
+    pinsLayer: null,
     travelOverlay: null,
     travelBar: null,
     travelText: null,
@@ -17,17 +21,13 @@ window.mapModule = {
     isTraveling: false,
     travelTimer: null,
 
-    // Zoom & drag state
-    scale: 1,
-    minScale: 1,
-    maxScale: 3,
-    translateX: 0,
-    translateY: 0,
-    isDragging: false,
-    dragStartX: 0,
-    dragStartY: 0,
-    dragStartTranslateX: 0,
-    dragStartTranslateY: 0,
+    viewMode: "region",
+    viewingRegionId: null,
+
+    activeDesignWidth: this.REGION_MAP_DESIGN_WIDTH,
+    activeDesignHeight: this.REGION_MAP_DESIGN_HEIGHT,
+
+    calibrationMode: false,
 
     /* ================================
        INIT
@@ -36,7 +36,7 @@ window.mapModule = {
         this.overlay = document.getElementById("mapOverlay");
         this.closeBtn = document.getElementById("mapCloseBtn");
         this.mapImage = document.getElementById("mapImage");
-        this.locationsContainer = document.getElementById("mapLocations");
+        this.pinsLayer = document.getElementById("mapPinsLayer");
         this.travelOverlay = document.getElementById("travelOverlay");
         this.travelBar = document.getElementById("travelBar");
         this.travelText = document.getElementById("travelText");
@@ -62,81 +62,37 @@ window.mapModule = {
             }
         });
 
-        // Инициализация зума и перетаскивания
-        this.initZoomAndDrag();
-    },
-
-    /* ================================
-       ZOOM & DRAG
-    ================================ */
-    initZoomAndDrag() {
-        this.mapImageContainer = document.querySelector(".map-image-container");
-        if (!this.mapImageContainer) return;
-
-        // Wheel zoom
-        this.mapImageContainer.addEventListener("wheel", (e) => {
-            e.preventDefault();
-            const rect = this.mapImageContainer.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-
-            const delta = e.deltaY > 0 ? -0.1 : 0.1;
-            const newScale = Math.min(this.maxScale, Math.max(this.minScale, this.scale + delta));
-
-            if (newScale !== this.scale) {
-                // Zoom towards mouse pointer
-                const scaleRatio = newScale / this.scale;
-                this.translateX = mouseX - scaleRatio * (mouseX - this.translateX);
-                this.translateY = mouseY - scaleRatio * (mouseY - this.translateY);
-                this.scale = newScale;
-                this.applyTransform();
-            }
-        }, { passive: false });
-
-        // Mouse drag
-        this.mapImageContainer.addEventListener("mousedown", (e) => {
-            if (e.button !== 0) return;
-            this.isDragging = true;
-            this.dragStartX = e.clientX;
-            this.dragStartY = e.clientY;
-            this.dragStartTranslateX = this.translateX;
-            this.dragStartTranslateY = this.translateY;
-            this.mapImageContainer.classList.add("dragging");
-        });
-
-        document.addEventListener("mousemove", (e) => {
-            if (!this.isDragging) return;
-            const dx = e.clientX - this.dragStartX;
-            const dy = e.clientY - this.dragStartY;
-            this.translateX = this.dragStartTranslateX + dx;
-            this.translateY = this.dragStartTranslateY + dy;
-            this.applyTransform();
-        });
-
-        document.addEventListener("mouseup", () => {
-            if (this.isDragging) {
-                this.isDragging = false;
-                this.mapImageContainer.classList.remove("dragging");
-            }
-        });
-    },
-
-    applyTransform() {
-        if (!this.mapImage) return;
-        this.mapImage.style.transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
-    },
-
-    resetZoomAndDrag() {
-        this.scale = 1;
-        this.translateX = 0;
-        this.translateY = 0;
-        this.isDragging = false;
-        if (this.mapImage) {
-            this.mapImage.style.transform = "";
-            this.mapImage.style.transition = "transform 0.15s ease-out";
+        const viewToggleBtn = document.getElementById("mapViewToggleBtn");
+        if (viewToggleBtn) {
+            viewToggleBtn.addEventListener("click", () => {
+                if (this.viewMode === "region") {
+                    this.viewMode = "world";
+                    viewToggleBtn.textContent = "📍 Карта региона";
+                } else {
+                    this.viewMode = "region";
+                    this.viewingRegionId = this.getCurrentLocationData().region.id;
+                    viewToggleBtn.textContent = "🌍 Карта мира";
+                }
+                this.renderCurrentView();
+            });
         }
-        if (this.mapImageContainer) {
-            this.mapImageContainer.classList.remove("dragging");
+
+        if (this.mapImage) {
+            this.mapImage.addEventListener("click", (e) => {
+                if (!this.calibrationMode) return;
+
+                const rect = this.mapImage.getBoundingClientRect();
+                const percentX = ((e.clientX - rect.left) / rect.width) * 100;
+                const percentY = ((e.clientY - rect.top) / rect.height) * 100;
+
+                const coords = {
+                    x: Math.round((percentX / 100) * this.activeDesignWidth),
+                    y: Math.round((percentY / 100) * this.activeDesignHeight)
+                };
+
+                ui.writeLog(`Клик: x=${coords.x}, y=${coords.y}`);
+                console.log(coords);
+            });
         }
     },
 
@@ -189,18 +145,42 @@ window.mapModule = {
         return this.findLocationById(locId);
     },
 
+    getRegionMapPath(regionId) {
+        return `assets/regions/region_${regionId}/map.webp`;
+    },
+
+    coordToPercent(coord) {
+        return {
+            left: (coord.x / this.activeDesignWidth) * 100,
+            top: (coord.y / this.activeDesignHeight) * 100
+        };
+    },
+
+    getWorldMapPath() {
+        return "assets/map/map.webp";
+    },
+
+    worldCoordToPercent(coord) {
+        return {
+            left: (coord.x / this.WORLD_MAP_DESIGN_WIDTH) * 100,
+            top: (coord.y / this.WORLD_MAP_DESIGN_HEIGHT) * 100
+        };
+    },
+
+    findRegionById(regionId) {
+        const data = this.getGrimwoodData();
+        if (!data) return null;
+        return data.regions.find((region) => region.id === regionId) || null;
+    },
+
     /* ================================
        ПОЛУЧЕНИЕ СОСЕДНИХ ЛОКАЦИЙ
     ================================ */
     getNeighborLocations() {
         const current = this.getCurrentLocationData();
         if (!current) {
-            console.warn("⚠️ mapModule.getNeighborLocations: current location data not found for", state.currentLocation);
             return [];
         }
-
-        console.log("📍 Текущая локация:", state.currentLocation, current.location.name, "(регион:", current.region.name + ")");
-        console.log("📋 Roads из данных:", JSON.stringify(current.location.roads || []));
 
         const roads = current.location.roads || [];
         const neighbors = [];
@@ -221,8 +201,6 @@ window.mapModule = {
                     travelTimeSeconds: travelTimeSeconds,
                     road: road
                 });
-            } else {
-                console.warn(`⚠️ Не найден соседний локация "${road.to}" для дороги`);
             }
         }
 
@@ -245,11 +223,8 @@ window.mapModule = {
                     isExit: true,
                     exitDescription: exit.description
                 });
-                console.log(`➡️ Найден выход в другой регион: ${exitNeighbor.location.name} (${exitNeighbor.region.name})`);
             }
         }
-
-        console.log(`🛣️ Всего найдено путей: ${neighbors.length}`, neighbors.map(n => n.name));
 
         // Сортируем по возрастанию времени пути (сначала ближайшие)
         neighbors.sort((a, b) => a.travelTimeSeconds - b.travelTimeSeconds);
@@ -260,57 +235,176 @@ window.mapModule = {
     /* ================================
        РЕНДЕР КАРТЫ
     ================================ */
-    render() {
-        if (!this.locationsContainer) return;
+    formatTravelTime(time) {
+        if (time >= 60) {
+            const minutes = Math.floor(time / 60);
+            const secs = Math.round(time % 60);
+            return `${minutes} мин ${secs} сек`;
+        }
+        return `${Math.round(time)} сек`;
+    },
 
-        // Очищаем контейнер
-        this.locationsContainer.innerHTML = "";
+    renderRegionPins() {
+        if (!this.pinsLayer) return;
 
-        // Получаем соседние локации
-        const neighbors = this.getNeighborLocations();
+        this.pinsLayer.innerHTML = "";
 
-        if (neighbors.length === 0) {
-            const emptyMsg = document.createElement("p");
-            emptyMsg.className = "map-no-locations";
-            emptyMsg.textContent = "Нет доступных путей";
-            this.locationsContainer.appendChild(emptyMsg);
+        const playerCurrent = this.getCurrentLocationData();
+        const isPlayerRegion = playerCurrent && this.viewingRegionId === playerCurrent.region.id;
+
+        if (!isPlayerRegion) {
+            const viewingRegion = this.findRegionById(this.viewingRegionId);
+            if (!viewingRegion) return;
+
+            viewingRegion.locations.forEach((loc) => {
+                const position = this.coordToPercent(loc.coord);
+                const pin = document.createElement("button");
+                pin.className = "map-pin";
+                pin.style.left = position.left + "%";
+                pin.style.top = position.top + "%";
+
+                if (loc.id === playerCurrent.location.id) {
+                    pin.classList.add("map-pin--current");
+                    pin.title = loc.name;
+                } else {
+                    pin.classList.add("map-pin--locked");
+                    pin.title = loc.name;
+                }
+
+                this.pinsLayer.appendChild(pin);
+            });
+
             return;
         }
 
-        // Создаём кнопки для каждой соседней локации
-        for (const neighbor of neighbors) {
-            const btn = document.createElement("button");
-            btn.className = "map-location-btn";
-            btn.dataset.locationId = neighbor.id;
+        const current = playerCurrent;
+        const neighbors = this.getNeighborLocations();
+        const exitNeighbor = neighbors.find((n) => n.isExit) || null;
 
-            // Название локации
-            const nameSpan = document.createElement("span");
-            nameSpan.className = "map-location-name";
-            nameSpan.textContent = neighbor.name;
+        current.region.locations.forEach((loc) => {
+            const position = this.coordToPercent(loc.coord);
+            const pin = document.createElement("button");
+            pin.className = "map-pin";
+            pin.style.left = position.left + "%";
+            pin.style.top = position.top + "%";
 
-            // Расстояние в секундах
-            const distSpan = document.createElement("span");
-            distSpan.className = "map-location-distance";
-
-            // Форматируем время: если >= 60 секунд, показываем минуты
-            const time = neighbor.travelTimeSeconds;
-            if (time >= 60) {
-                const minutes = Math.floor(time / 60);
-                const secs = Math.round(time % 60);
-                distSpan.textContent = `⏱ ${minutes} мин ${secs} сек`;
+            if (loc.id === state.currentLocation) {
+                pin.classList.add("map-pin--current");
+                pin.title = loc.name;
             } else {
-                distSpan.textContent = `⏱ ${Math.round(time)} сек`;
+                const neighbor = neighbors.find((n) => !n.isExit && n.id === loc.id);
+                if (neighbor) {
+                    pin.classList.add("map-pin--reachable");
+                    pin.title = `${neighbor.name} · ${this.formatTravelTime(neighbor.travelTimeSeconds)}`;
+                    pin.addEventListener("click", () => {
+                        this.startTravel(neighbor);
+                    });
+                } else {
+                    pin.classList.add("map-pin--locked");
+                    pin.title = loc.name;
+                }
             }
 
-            btn.appendChild(nameSpan);
-            btn.appendChild(distSpan);
+            this.pinsLayer.appendChild(pin);
+        });
 
-            // Обработчик клика — начать переход
-            btn.addEventListener("click", () => {
-                this.startTravel(neighbor);
+        if (exitNeighbor) {
+            const exitPin = document.createElement("button");
+            exitPin.className = "map-pin map-pin--reachable";
+            exitPin.style.left = "95%";
+            exitPin.style.top = "50%";
+            exitPin.title = `➜ ${exitNeighbor.regionName}: ${exitNeighbor.name}`;
+            exitPin.addEventListener("click", () => {
+                this.startTravel(exitNeighbor);
+            });
+            this.pinsLayer.appendChild(exitPin);
+        }
+    },
+
+    renderWorldPins() {
+        if (!this.pinsLayer) return;
+
+        this.pinsLayer.innerHTML = "";
+
+        const data = this.getGrimwoodData();
+        if (!data) return;
+
+        const playerCurrent = this.getCurrentLocationData();
+        const playerRegionId = playerCurrent ? playerCurrent.region.id : null;
+
+        data.regions.forEach((region) => {
+            const position = this.worldCoordToPercent(region.coordinates);
+            const pin = document.createElement("button");
+            pin.className = "map-pin";
+            pin.style.left = position.left + "%";
+            pin.style.top = position.top + "%";
+            pin.title = region.name;
+
+            if (region.id === playerRegionId) {
+                pin.classList.add("map-pin--current");
+            } else {
+                pin.classList.add("map-pin--reachable");
+            }
+
+            pin.addEventListener("click", () => {
+                this.viewingRegionId = region.id;
+                this.viewMode = "region";
+                this.renderCurrentView();
             });
 
-            this.locationsContainer.appendChild(btn);
+            this.pinsLayer.appendChild(pin);
+        });
+    },
+
+    renderCurrentView() {
+        if (this.viewMode === "region") {
+            const playerCurrent = this.getCurrentLocationData();
+            const region = this.findRegionById(this.viewingRegionId);
+            if (!region) return;
+
+            const container = this.getMapImageContainer();
+            if (container) {
+                container.classList.remove("map-fallback");
+            }
+
+            this.activeDesignWidth = this.REGION_MAP_DESIGN_WIDTH;
+            this.activeDesignHeight = this.REGION_MAP_DESIGN_HEIGHT;
+
+            this.mapImage.src = this.getRegionMapPath(region.id);
+            this.mapImage.onerror = () => {
+                this.mapImage.onerror = null;
+                const fallbackContainer = this.getMapImageContainer();
+                if (fallbackContainer) {
+                    fallbackContainer.classList.add("map-fallback");
+                }
+                this.activeDesignWidth = this.WORLD_MAP_DESIGN_WIDTH;
+                this.activeDesignHeight = this.WORLD_MAP_DESIGN_HEIGHT;
+                this.mapImage.src = this.getWorldMapPath();
+                this.renderRegionPins();
+            };
+            this.renderRegionPins();
+
+            const isPlayerRegion = playerCurrent && playerCurrent.region.id === region.id;
+            const headerEl = document.getElementById("mapCurrentLocation");
+            if (headerEl) {
+                headerEl.textContent = isPlayerRegion ? `📍 ${region.name}` : `📍 ${region.name} (обзор)`;
+            }
+        }
+
+        if (this.viewMode === "world") {
+            const container = this.getMapImageContainer();
+            if (container) {
+                container.classList.remove("map-fallback");
+            }
+            this.activeDesignWidth = this.WORLD_MAP_DESIGN_WIDTH;
+            this.activeDesignHeight = this.WORLD_MAP_DESIGN_HEIGHT;
+            this.mapImage.src = this.getWorldMapPath();
+            this.renderWorldPins();
+
+            const headerEl = document.getElementById("mapCurrentLocation");
+            if (headerEl) {
+                headerEl.textContent = "Карта мира";
+            }
         }
     },
 
@@ -329,9 +423,11 @@ window.mapModule = {
         const totalTime = neighbor.travelTimeSeconds * 1000; // в миллисекундах
         const startTime = Date.now();
 
-        // Скрываем кнопки локаций во время перехода
-        const locationBtns = this.locationsContainer.querySelectorAll(".map-location-btn");
-        locationBtns.forEach(btn => btn.disabled = true);
+        // Скрываем пины локаций во время перехода
+        if (this.pinsLayer) {
+            const pinBtns = this.pinsLayer.querySelectorAll(".map-pin");
+            pinBtns.forEach(pin => pin.disabled = true);
+        }
 
         // Анимация прогресс-бара
         const updateProgress = () => {
@@ -385,37 +481,36 @@ window.mapModule = {
             }
         }
 
-        // Обновляем карту — показываем новые доступные локации
-        this.render();
+        const current = this.getCurrentLocationData();
+        this.viewMode = "region";
+        this.viewingRegionId = current ? current.region.id : null;
+        this.renderCurrentView();
     },
 
     /* ================================
        ОТКРЫТЬ / ЗАКРЫТЬ
     ================================ */
+    getMapImageContainer() {
+        if (!this.mapImage) return null;
+        return this.mapImage.closest(".map-image-container");
+    },
+
     open() {
         if (this.isTraveling) return;
-
-        // Сбрасываем зум и позицию при каждом открытии
-        this.resetZoomAndDrag();
 
         this.overlay.classList.remove("hidden");
         this.isOpen = true;
 
-        // Устанавливаем изображение карты
-        if (this.mapImage) {
-            this.mapImage.src = "assets/map/map.webp";
-            this.mapImage.alt = "Карта мира Grimwood";
-            // Скрываем индикатор загрузки после загрузки изображения
-            this.mapImage.onload = () => {
-                this.updateLocationHeader();
-            };
+        const current = this.getCurrentLocationData();
+        this.viewMode = "region";
+        this.viewingRegionId = current ? current.region.id : null;
+
+        const viewToggleBtn = document.getElementById("mapViewToggleBtn");
+        if (viewToggleBtn) {
+            viewToggleBtn.textContent = "🌍 Карта мира";
         }
 
-        // Рендерим доступные локации
-        this.render();
-
-        // Показываем текущую локацию в заголовке
-        this.updateLocationHeader();
+        this.renderCurrentView();
     },
 
     updateLocationHeader() {
@@ -440,13 +535,18 @@ window.mapModule = {
         this.overlay.classList.add("hidden");
         this.isOpen = false;
 
-        // Очищаем контейнер локаций
-        if (this.locationsContainer) {
-            this.locationsContainer.innerHTML = "";
+        // Очищаем слой пинов
+        if (this.pinsLayer) {
+            this.pinsLayer.innerHTML = "";
         }
     },
 
     toggle() {
         this.isOpen ? this.close() : this.open();
     }
+};
+
+window.toggleMapCalibration = () => {
+    mapModule.calibrationMode = !mapModule.calibrationMode;
+    console.log(mapModule.calibrationMode ? "Калибровка включена" : "Калибровка выключена");
 };

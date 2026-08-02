@@ -18,6 +18,8 @@ window.state = {
 
     heroDef: 0,
 
+    heroBuffs: [],
+
     baseHeroMaxHp: 0,
     baseHeroMinDmg: 0,
     baseHeroMaxDmg: 0,

@@ -86,6 +86,26 @@ window.battle = (() => {
         }
 
         state.heroEffects = next;
+
+        if (state.heroBuffs && state.heroBuffs.length > 0) {
+            let buffExpired = false;
+            const nextBuffs = [];
+
+            state.heroBuffs.forEach((buff) => {
+                buff.turnsLeft--;
+                if (buff.turnsLeft <= 0) {
+                    buffExpired = true;
+                } else {
+                    nextBuffs.push(buff);
+                }
+            });
+
+            state.heroBuffs = nextBuffs;
+
+            if (buffExpired) {
+                inventory.recalculateHeroStats();
+            }
+        }
     }
 
     function addHeroEffect(effectName, damage, turns) {

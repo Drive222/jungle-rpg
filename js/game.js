@@ -141,6 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         state.heroMaxDmg = data.maxDamage;
         state.heroDef = 0;
         state.heroEffects = [];
+        state.heroBuffs = [];
         state.monsterHp = 0;
         state.monsterCount = 0;
         state.gold = 0;

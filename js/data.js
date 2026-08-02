@@ -178,7 +178,8 @@ window.ITEMS = {
         icon: "assets/items/potion_red.webp",
         type: "consumable",
         stackable: true,
-        maxStack: 5
+        maxStack: 5,
+        effects: [{ kind: "heal", amount: 30 }]
     },
 
     sword_rusty: {

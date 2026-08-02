@@ -74,7 +74,7 @@
       "type": "safe",
       "level_range": null,
       "description": "Безопасная стартовая зона. Торговцы, квесты, крафт и найм спутников.",
-      "coordinates": { "x": 500, "y": 600 },
+      "coordinates": { "x": 187, "y": 581 },
       "connections_to_regions": [1],
       "locations": [
         {
@@ -148,7 +148,7 @@
       "type": "wilderness",
       "level_range": { "min": 1, "max": 5 },
       "description": "Таинственный лес, полный опасностей. Первая зона для приключений.",
-      "coordinates": { "x": 500, "y": 450 },
+      "coordinates": { "x": 316, "y": 332 },
       "connections_to_regions": [0, 2],
       "locations": [
         {
@@ -275,7 +275,7 @@
       "type": "wilderness",
       "level_range": { "min": 5, "max": 10 },
       "description": "Бывший военный лагерь, захваченный гоблинами.",
-      "coordinates": { "x": 700, "y": 400 },
+      "coordinates": { "x": 512, "y": 157 },
       "connections_to_regions": [1, 3],
       "locations": [
         {
@@ -371,7 +371,7 @@
       "type": "wilderness",
       "level_range": { "min": 10, "max": 15 },
       "description": "Древнее кладбище, где нежить поднялась из могил.",
-      "coordinates": { "x": 850, "y": 300 },
+      "coordinates": { "x": 780, "y": 180 },
       "connections_to_regions": [2, 4],
       "locations": [
         {
@@ -500,7 +500,7 @@
       "type": "wilderness",
       "level_range": { "min": 15, "max": 20 },
       "description": "Токсичные болота, где выживают только самые стойкие.",
-      "coordinates": { "x": 1000, "y": 450 },
+      "coordinates": { "x": 1059, "y": 183 },
       "connections_to_regions": [3, 5],
       "locations": [
         {
@@ -582,7 +582,7 @@
       "type": "wilderness",
       "level_range": { "min": 20, "max": 30 },
       "description": "Суровые заснеженные горы. Холод и опасности подстерегают на каждом шагу.",
-      "coordinates": { "x": 800, "y": 100 },
+      "coordinates": { "x": 1240, "y": 355 },
       "connections_to_regions": [4, 6],
       "locations": [
         {
@@ -721,7 +721,7 @@
       "type": "wilderness",
       "level_range": { "min": 30, "max": 40 },
       "description": "Выжженная земля, где правят огненные элементали и демоны.",
-      "coordinates": { "x": 600, "y": 200 },
+      "coordinates": { "x": 933, "y": 536 },
       "connections_to_regions": [5, 7],
       "locations": [
         {
@@ -805,7 +805,7 @@
       "type": "wilderness",
       "level_range": { "min": 40, "max": 50 },
       "description": "Бескрайняя пустыня с древними гробницами и миражами.",
-      "coordinates": { "x": 350, "y": 200 },
+      "coordinates": { "x": 1285, "y": 620 },
       "connections_to_regions": [6, 8],
       "locations": [
         {
@@ -890,7 +890,7 @@
       "type": "wilderness",
       "level_range": { "min": 50, "max": 65 },
       "description": "Земли, погружённые во тьму. Обитель высших демонов и порождений скверны.",
-      "coordinates": { "x": 250, "y": 400 },
+      "coordinates": { "x": 1097, "y": 768 },
       "connections_to_regions": [7, 9],
       "locations": [
         {
@@ -1037,7 +1037,7 @@
       "type": "wilderness",
       "level_range": { "min": 65, "max": 80 },
       "description": "Финальная зона игры. Цитадель абсолютной тьмы, где обитает финальный босс.",
-      "coordinates": { "x": 100, "y": 600 },
+      "coordinates": { "x": 824, "y": 833 },
       "connections_to_regions": [8],
       "locations": [
         {

@@ -456,7 +456,15 @@ window.inventory = {
     recalculateHeroStats() {
         if (!state.heroClass) return;
 
-        const bonus = this.getEquipmentBonuses();
+        const equipBonus = this.getEquipmentBonuses();
+        const buffBonus = this.getBuffBonuses();
+
+        const bonus = {
+            hp: equipBonus.hp + buffBonus.hp,
+            minDmg: equipBonus.minDmg + buffBonus.minDmg,
+            maxDmg: equipBonus.maxDmg + buffBonus.maxDmg,
+            def: equipBonus.def + buffBonus.def
+        };
 
         const oldMaxHp = state.heroMaxHp;
         state.heroMaxHp = state.baseHeroMaxHp + bonus.hp;
@@ -584,23 +592,68 @@ window.inventory = {
         const itemData = this.getItemData(entry);
         if (!entry || !itemData) return;
 
-        if (itemData.id === "potion_small") {
-            const healAmount = 30;
-            state.heroHp = Math.min(state.heroHp + healAmount, state.heroMaxHp);
+        if (itemData.type !== "consumable" || !Array.isArray(itemData.effects)) return;
 
-            const amount = this.getItemAmount(entry);
-            if (amount > 1) {
-                state.inventory[index] = this.makeEntry(itemData.id, amount - 1);
-            } else {
-                state.inventory[index] = null;
-                state.selectedItemIndex = null;
-            }
+        itemData.effects.forEach((effect) => {
+            this.applyConsumableEffect(effect);
+        });
 
-            this.renderItems();
-            this.renderItemInfo();
-            this.updateHeroStats();
-            ui.updateHpBar();
+        const amount = this.getItemAmount(entry);
+        if (amount > 1) {
+            state.inventory[index] = this.makeEntry(itemData.id, amount - 1);
+        } else {
+            state.inventory[index] = null;
+            state.selectedItemIndex = null;
         }
+
+        this.renderItems();
+        this.renderItemInfo();
+        this.recalculateHeroStats();
+        ui.updateHpBar();
+    },
+
+    applyConsumableEffect(effect) {
+        if (!effect) return;
+
+        if (effect.kind === "heal") {
+            state.heroHp = Math.min(state.heroHp + effect.amount, state.heroMaxHp);
+            this.log(`❤️ Восстановлено ${effect.amount} HP`);
+        }
+
+        if (effect.kind === "buff") {
+            if (!state.heroBuffs) state.heroBuffs = [];
+            state.heroBuffs.push({
+                stat: effect.stat,
+                amount: effect.amount,
+                turnsLeft: effect.turns || 1
+            });
+            this.log(`✨ Получен баф: +${effect.amount} к ${effect.stat} на ${effect.turns || 1} ход(ов)`);
+        }
+
+        if (effect.kind === "cleanse") {
+            state.heroEffects = [];
+            this.log("🧼 Негативные эффекты сняты");
+        }
+    },
+
+    getBuffBonuses() {
+        const bonus = {
+            hp: 0,
+            minDmg: 0,
+            maxDmg: 0,
+            def: 0
+        };
+
+        if (!state.heroBuffs) return bonus;
+
+        state.heroBuffs.forEach((buff) => {
+            if (buff.stat === "maxHp") bonus.hp += buff.amount;
+            if (buff.stat === "minDmg") bonus.minDmg += buff.amount;
+            if (buff.stat === "maxDmg") bonus.maxDmg += buff.amount;
+            if (buff.stat === "def") bonus.def += buff.amount;
+        });
+
+        return bonus;
     },
 
     setHeroSprite(sprite) {
