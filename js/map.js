@@ -77,6 +77,16 @@ window.mapModule = {
             });
         }
 
+        const portalLocationBtn = document.getElementById("portalLocationBtn");
+        if (portalLocationBtn) {
+            portalLocationBtn.addEventListener("click", () => this.openPortal());
+        }
+
+        const portalCloseBtn = document.getElementById("portalCloseBtn");
+        if (portalCloseBtn) {
+            portalCloseBtn.addEventListener("click", () => this.closePortal());
+        }
+
         if (this.mapImage) {
             this.mapImage.addEventListener("click", (e) => {
                 if (!this.calibrationMode) return;
@@ -143,6 +153,115 @@ window.mapModule = {
     getCurrentLocationData() {
         const locId = state.currentLocation || "loc_0_0";
         return this.findLocationById(locId);
+    },
+
+    markVisited(locId) {
+        if (!state.visitedLocations.includes(locId)) {
+            state.visitedLocations.push(locId);
+        }
+    },
+
+    getTeleportTargets() {
+        const data = this.getGrimwoodData();
+        if (!data) return [];
+
+        const currentRegionId = this.getCurrentLocationData()?.region.id;
+        const targets = [];
+
+        for (const region of data.regions) {
+            const centralLocId = `loc_${region.id}_0`;
+            if (!state.visitedLocations.includes(centralLocId)) continue;
+            if (region.id === currentRegionId) continue;
+
+            const centralLoc = region.locations.find((loc) => loc.id === centralLocId);
+            if (!centralLoc) continue;
+
+            targets.push({
+                regionId: region.id,
+                regionName: region.name,
+                locationId: centralLocId,
+                locationName: centralLoc.name
+            });
+        }
+
+        return targets;
+    },
+
+    teleportTo(locationId) {
+        state.currentLocation = locationId;
+        this.markVisited(locationId);
+        this.closePortal();
+
+        if (this.isOpen) {
+            const targetData = this.findLocationById(locationId);
+            this.viewMode = "region";
+            this.viewingRegionId = targetData ? targetData.region.id : null;
+            this.renderCurrentView();
+        }
+
+        if (window.shopModule) {
+            shopModule.updateLocationButton();
+        }
+        this.updatePortalButton();
+    },
+
+    updatePortalButton() {
+        const portalBtn = document.getElementById("portalLocationBtn");
+        if (!portalBtn) return;
+        portalBtn.classList.toggle("hidden", state.currentLocation !== "loc_0_4");
+    },
+
+    openPortal() {
+        const overlay = document.getElementById("portalOverlay");
+        if (!overlay) return;
+        overlay.classList.remove("hidden");
+        this.renderPortalList();
+    },
+
+    closePortal() {
+        const overlay = document.getElementById("portalOverlay");
+        if (!overlay) return;
+        overlay.classList.add("hidden");
+    },
+
+    renderPortalList() {
+        const list = document.getElementById("portalList");
+        if (!list) return;
+
+        list.innerHTML = "";
+
+        const targets = this.getTeleportTargets();
+
+        if (targets.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "bazaar-empty";
+            empty.textContent = "Пока нет доступных точек — сначала дойди туда пешком";
+            list.appendChild(empty);
+            return;
+        }
+
+        for (const target of targets) {
+            const row = document.createElement("div");
+            row.className = "bazaar-item";
+
+            const info = document.createElement("div");
+            info.className = "bazaar-item-info";
+
+            const name = document.createElement("div");
+            name.className = "bazaar-item-name";
+            name.textContent = `${target.regionName} — ${target.locationName}`;
+
+            info.appendChild(name);
+            row.appendChild(info);
+
+            const btn = document.createElement("button");
+            btn.className = "bazaar-buy-btn";
+            btn.textContent = "Телепортироваться";
+            btn.addEventListener("click", () => this.teleportTo(target.locationId));
+
+            row.appendChild(btn);
+            list.appendChild(row);
+        }
     },
 
     getRegionMapPath(regionId) {
@@ -463,6 +582,8 @@ window.mapModule = {
 
         // Обновляем текущую локацию персонажа
         state.currentLocation = neighbor.id;
+        this.markVisited(neighbor.id);
+        this.updatePortalButton();
 
         // Скрываем оверлей перехода
         if (this.travelOverlay) {

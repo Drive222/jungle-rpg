@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         state.gold = 0;
         state.crystals = 0;
         state.fighting = false;
+        state.visitedLocations = ["loc_0_0"];
 
         resetHeroInventory();
 
@@ -179,6 +180,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         ui.writeLog(`✨ Герой ${state.heroName} вступает в Grimwood`);
         ui.writeLog(`⚔️ Выбран класс: ${data.name}`);
         ui.writeLog("⚔️ Нажми «В БОЙ»");
+
+        mapModule.updatePortalButton();
     }
 
     openModalButtons.forEach((button) => {

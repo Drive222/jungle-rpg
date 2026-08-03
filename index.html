@@ -242,6 +242,7 @@
         <button id="reviveBtn" class="hidden">🔁 Возродиться</button>
         <button id="inventoryBtn">🎒 Инвентарь</button>
         <button id="mapBtn">🗺️ Карта</button>
+        <button id="portalLocationBtn" class="hidden">🌀 Портал</button>
 
         <div class="top-hud">
             <div class="record" id="record">
@@ -294,6 +295,19 @@
             </div>
             <p class="travel-text" id="travelText">🚶 Переход...</p>
         </div>
+    </div>
+</div>
+
+<!-- ================================
+     PORTAL OVERLAY
+================================ -->
+<div class="modal-overlay hidden" id="portalOverlay">
+    <div class="bazaar-modal">
+        <div class="bazaar-header">
+            <span>🌀 Портал</span>
+            <button id="portalCloseBtn">✕</button>
+        </div>
+        <div class="bazaar-list" id="portalList"></div>
     </div>
 </div>
 
