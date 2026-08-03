@@ -59,6 +59,6 @@ window.state = {
     /* ================================
        MAP / LOCATION
     ================================ */
-    currentLocation: "loc_0_0",
-    visitedLocations: ["loc_0_0"]
+    currentLocation: "loc_0_4",
+    visitedLocations: ["loc_0_4"]
 };

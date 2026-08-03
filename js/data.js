@@ -179,6 +179,8 @@ window.ITEMS = {
         type: "consumable",
         stackable: true,
         maxStack: 5,
+        price: 20,
+        currency: "gold",
         effects: [{ kind: "heal", amount: 30 }]
     },
 
@@ -191,7 +193,9 @@ window.ITEMS = {
         handed: "one",
         minDamageBonus: 4,
         maxDamageBonus: 7,
-        stackable: false
+        stackable: false,
+        price: 60,
+        currency: "gold"
     },
 
     hood_old: {
@@ -201,7 +205,9 @@ window.ITEMS = {
         type: "armor",
         equipSlot: "head",
         defBonus: 2,
-        stackable: false
+        stackable: false,
+        price: 55,
+        currency: "gold"
     },
 
     ring_copper: {
@@ -211,7 +217,9 @@ window.ITEMS = {
         type: "accessory",
         equipSlot: "ring",
         hpBonus: 10,
-        stackable: false
+        stackable: false,
+        price: 2,
+        currency: "crystal"
     },
 
     // Одноручное оружие

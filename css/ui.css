@@ -237,6 +237,15 @@
     opacity: 0.5;
 }
 
+.map-pin--enterable {
+    cursor: pointer;
+}
+
+.map-pin--enterable:hover {
+    box-shadow: 0 0 14px rgba(239, 159, 39, 0.9);
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
 .map-fallback .map-image {
     opacity: 0.85;
 }
@@ -419,4 +428,43 @@
     text-align: center;
     padding: 24px 12px;
     font-size: 14px;
+}
+
+.merchant-hotspot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 130px;
+    height: 130px;
+    border: none;
+    background: radial-gradient(circle, rgba(239, 159, 39, 0.2) 0%, rgba(239, 159, 39, 0.08) 40%, rgba(239, 159, 39, 0) 70%);
+    cursor: pointer;
+    padding: 0;
+    animation: merchant-glow 2s ease-in-out infinite;
+}
+
+@keyframes merchant-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+.merchant-hotspot:hover {
+    background: radial-gradient(circle, rgba(239, 159, 39, 0.35) 0%, rgba(239, 159, 39, 0.15) 40%, rgba(239, 159, 39, 0) 70%);
+}
+
+.bazaar-section-title {
+    font-size: 13px;
+    opacity: 0.7;
+    margin: 12px 0 4px;
+}
+
+#scene {
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.3s ease;
+}
+
+.location-hotspot-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
 }

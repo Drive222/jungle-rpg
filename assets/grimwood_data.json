@@ -87,9 +87,10 @@
           "mobs": [],
           "npcs": ["Торговец Арно", "Аукционистка Лира"],
           "roads": [
-            { "to": "loc_0_1", "distance": 25 },
-            { "to": "loc_0_2", "distance": 20 },
-            { "to": "loc_0_4", "distance": 15 }
+            { "to": "loc_0_1", "distance": 20 },
+            { "to": "loc_0_2", "distance": 22 },
+            { "to": "loc_0_3", "distance": 32 },
+            { "to": "loc_0_4", "distance": 14 }
           ]
         },
         {
@@ -102,8 +103,10 @@
           "mobs": [],
           "npcs": ["Гильдмастер Боромир", "Секретарь Эльза"],
           "roads": [
-            { "to": "loc_0_0", "distance": 25 },
-            { "to": "loc_0_3", "distance": 30 }
+            { "to": "loc_0_0", "distance": 20 },
+            { "to": "loc_0_2", "distance": 40 },
+            { "to": "loc_0_3", "distance": 19 },
+            { "to": "loc_0_4", "distance": 21 }
           ]
         },
         {
@@ -116,8 +119,10 @@
           "mobs": [],
           "npcs": ["Кузнец Торгрим", "Ювелир Мира"],
           "roads": [
-            { "to": "loc_0_0", "distance": 20 },
-            { "to": "loc_0_3", "distance": 25 }
+            { "to": "loc_0_0", "distance": 22 },
+            { "to": "loc_0_1", "distance": 40 },
+            { "to": "loc_0_3", "distance": 45 },
+            { "to": "loc_0_4", "distance": 23 }
           ]
         },
         {
@@ -130,8 +135,10 @@
           "mobs": [],
           "npcs": ["Трактирщик Ганс", "Бард Лютен", "Наёмник Кейн"],
           "roads": [
-            { "to": "loc_0_1", "distance": 30 },
-            { "to": "loc_0_2", "distance": 25 }
+            { "to": "loc_0_0", "distance": 32 },
+            { "to": "loc_0_1", "distance": 19 },
+            { "to": "loc_0_2", "distance": 45 },
+            { "to": "loc_0_4", "distance": 22 }
           ]
         },
         {
@@ -144,17 +151,20 @@
           "mobs": [],
           "npcs": [],
           "roads": [
-            { "to": "loc_0_0", "distance": 15 }
+            { "to": "loc_0_0", "distance": 14 },
+            { "to": "loc_0_1", "distance": 21 },
+            { "to": "loc_0_2", "distance": 23 },
+            { "to": "loc_0_3", "distance": 22 }
           ]
         }
       ],
-      "exit_to_region": {
-        "from": "loc_0_1",
-        "to_region": 1,
-        "to_location": "loc_1_0",
-        "distance": 40,
-        "description": "Тропа от Гильдии ведёт в Древний лес"
-      }
+      "exit_to_region": [
+        { "from": "loc_0_0", "to_region": 1, "to_location": "loc_1_0", "distance": 40, "description": "Тропа от Базара ведёт в Древний лес" },
+        { "from": "loc_0_1", "to_region": 1, "to_location": "loc_1_0", "distance": 40, "description": "Тропа от Гильдии ведёт в Древний лес" },
+        { "from": "loc_0_2", "to_region": 1, "to_location": "loc_1_0", "distance": 40, "description": "Тропа от Кузницы ведёт в Древний лес" },
+        { "from": "loc_0_3", "to_region": 1, "to_location": "loc_1_0", "distance": 40, "description": "Тропа от Таверны ведёт в Древний лес" },
+        { "from": "loc_0_4", "to_region": 1, "to_location": "loc_1_0", "distance": 40, "description": "Тропа от Центральной площади ведёт в Древний лес" }
+      ]
     },
     {
       "id": 1,
@@ -171,7 +181,7 @@
           "type": "combat",
           "level_range": { "min": 1, "max": 3 },
           "description": "Вход в Древний лес. Водится некрупная живность.",
-          "coord": { "x": 450, "y": 400 },
+          "coord": { "x": 213, "y": 257 },
           "mobs": [
             { "id": "mob_1_0_0", "name": "Лесной волк", "level": 2, "type": "normal" },
             { "id": "mob_1_0_1", "name": "Заяц-мутант", "level": 1, "type": "normal" }
@@ -187,7 +197,7 @@
           "type": "combat",
           "level_range": { "min": 3, "max": 5 },
           "description": "Логово волчьей стаи. Опасная зона для новичков.",
-          "coord": { "x": 600, "y": 350 },
+          "coord": { "x": 557, "y": 189 },
           "mobs": [
             { "id": "mob_1_1_0", "name": "Волк-охотник", "level": 3, "type": "normal" },
             { "id": "mob_1_1_1", "name": "Матерый волк", "level": 4, "type": "normal" },
@@ -204,7 +214,7 @@
           "type": "combat",
           "level_range": { "min": 4, "max": 5 },
           "description": "Священная роща, захваченная друидами-отступниками. Множество ловушек.",
-          "coord": { "x": 650, "y": 450 },
+          "coord": { "x": 887, "y": 270 },
           "mobs": [
             { "id": "mob_1_2_0", "name": "Друид-отступник", "level": 4, "type": "normal" },
             { "id": "mob_1_2_1", "name": "Друид-старший", "level": 5, "type": "elite" },
@@ -221,7 +231,7 @@
           "type": "combat",
           "level_range": { "min": 2, "max": 4 },
           "description": "Заброшенная мельница, облюбованная разбойниками.",
-          "coord": { "x": 400, "y": 300 },
+          "coord": { "x": 449, "y": 564 },
           "mobs": [
             { "id": "mob_1_3_0", "name": "Разбойник", "level": 2, "type": "normal" },
             { "id": "mob_1_3_1", "name": "Разбойник-громила", "level": 3, "type": "normal" },
@@ -238,7 +248,7 @@
           "type": "dungeon",
           "level_range": { "min": 3, "max": 5 },
           "description": "Лёгкий вводный данж: волки-тени, простые ловушки, мини-босс в конце.",
-          "coord": { "x": 550, "y": 250 },
+          "coord": { "x": 964, "y": 593 },
           "mobs": [
             { "id": "mob_1_4_0", "name": "Волк-тень", "level": 3, "type": "normal" },
             { "id": "mob_1_4_1", "name": "Теневой ловчий", "level": 4, "type": "normal" },

@@ -232,9 +232,10 @@
         </div>
     </div>
 
-    <div class="scene">
+    <div class="scene" id="scene">
         <div class="hero idle" id="hero"></div>
         <div class="monster hidden" id="monster"></div>
+        <div class="location-hotspot-layer" id="locationHotspotLayer"></div>
     </div>
 
     <div class="ui">
@@ -311,6 +312,19 @@
     </div>
 </div>
 
+<div class="modal-overlay hidden" id="merchantPopup">
+    <div class="bazaar-modal">
+        <div class="bazaar-header">
+            <span id="merchantPopupTitle">Продавец</span>
+            <button id="merchantPopupCloseBtn">✕</button>
+        </div>
+        <div class="bazaar-section-title">Купить</div>
+        <div class="bazaar-list" id="merchantBuyList"></div>
+        <div class="bazaar-section-title">Продать</div>
+        <div class="bazaar-list" id="merchantSellList"></div>
+    </div>
+</div>
+
 <!-- ================================
      INVENTORY
 =============================== -->
@@ -361,6 +375,7 @@
 <script src="js/state.js?v=20260213"></script>
 <script src="js/ui.js?v=20260213"></script>
 <script src="js/inventory.js?v=20260213"></script>
+<script src="js/shop.js?v=20260213"></script>
 <script src="js/battle.js?v=20260213"></script>
 <script src="js/map.js?v=20260213"></script>
 <script src="js/game.js?v=20260213"></script>

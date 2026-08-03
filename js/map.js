@@ -29,6 +29,10 @@ window.mapModule = {
 
     calibrationMode: false,
 
+    SCENE_CONFIG: {
+        "loc_0_0": { background: "assets/backgrounds/bazaar_scene.webp", disableFight: true }
+    },
+
     /* ================================
        INIT
     ================================ */
@@ -199,16 +203,43 @@ window.mapModule = {
             this.renderCurrentView();
         }
 
-        if (window.shopModule) {
-            shopModule.updateLocationButton();
-        }
         this.updatePortalButton();
+        this.updateLocationScene();
     },
 
     updatePortalButton() {
         const portalBtn = document.getElementById("portalLocationBtn");
         if (!portalBtn) return;
         portalBtn.classList.toggle("hidden", state.currentLocation !== "loc_0_4");
+    },
+
+    updateLocationScene() {
+        const scene = document.getElementById("scene");
+        const fightBtn = document.getElementById("fightBtn");
+        const monster = document.getElementById("monster");
+        const hero = document.getElementById("hero");
+        const hotspotLayer = document.getElementById("locationHotspotLayer");
+        if (!scene) return;
+        const current = this.getCurrentLocationData();
+        const config = this.SCENE_CONFIG[state.currentLocation];
+        const isSafeRegion = current && current.region.type === "safe";
+
+        if (config) {
+            scene.style.backgroundImage = `url(${config.background})`;
+        } else {
+            scene.style.backgroundImage = "";
+        }
+
+        if (fightBtn) fightBtn.classList.toggle("hidden", (config && config.disableFight) || isSafeRegion);
+        if (hero) hero.classList.toggle("hidden", !!config);
+        if (monster) monster.classList.toggle("hidden", true);
+        if (hotspotLayer) {
+            if (config && config.hotspots !== false && window.shopModule && state.currentLocation === "loc_0_0") {
+                shopModule.renderHotspots(hotspotLayer);
+            } else {
+                hotspotLayer.innerHTML = "";
+            }
+        }
     },
 
     openPortal() {
@@ -324,26 +355,29 @@ window.mapModule = {
         }
 
         // 2) Выход в другой регион (exit_to_region)
-        const exit = current.region.exit_to_region;
-        if (exit && exit.from === state.currentLocation) {
-            const exitNeighbor = this.findLocationById(exit.to_location);
-            if (exitNeighbor) {
-                const speed = this.getCharacterSpeed();
-                const distanceSteps = exit.distance;
-                const travelTimeSeconds = speed > 0 ? distanceSteps / speed : distanceSteps;
+        const exits = Array.isArray(current.region.exit_to_region)
+            ? current.region.exit_to_region
+            : (current.region.exit_to_region ? [current.region.exit_to_region] : []);
 
-                neighbors.push({
-                    id: exit.to_location,
-                    name: exitNeighbor.location.name,
-                    regionName: exitNeighbor.region.name,
-                    distance: distanceSteps,
-                    travelTimeSeconds: travelTimeSeconds,
-                    road: { to: exit.to_location, distance: exit.distance },
-                    isExit: true,
-                    exitDescription: exit.description
-                });
-            }
-        }
+        exits.forEach((exit) => {
+            if (exit.from !== state.currentLocation) return;
+            const exitNeighbor = this.findLocationById(exit.to_location);
+            if (!exitNeighbor) return;
+            const speed = this.getCharacterSpeed();
+            const distanceSteps = exit.distance;
+            const travelTimeSeconds = speed > 0 ? distanceSteps / speed : distanceSteps;
+
+            neighbors.push({
+                id: exit.to_location,
+                name: exitNeighbor.location.name,
+                regionName: exitNeighbor.region.name,
+                distance: distanceSteps,
+                travelTimeSeconds: travelTimeSeconds,
+                road: { to: exit.to_location, distance: exit.distance },
+                isExit: true,
+                exitDescription: exit.description
+            });
+        });
 
         // Сортируем по возрастанию времени пути (сначала ближайшие)
         neighbors.sort((a, b) => a.travelTimeSeconds - b.travelTimeSeconds);
@@ -606,6 +640,7 @@ window.mapModule = {
         this.viewMode = "region";
         this.viewingRegionId = current ? current.region.id : null;
         this.renderCurrentView();
+        this.updateLocationScene();
     },
 
     /* ================================

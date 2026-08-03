@@ -18,6 +18,7 @@ async function loadGrimwoodData() {
 document.addEventListener("DOMContentLoaded", async () => {
     ui.init();
     inventory.init();
+    shopModule.init();
 
     // Загружаем данные карты ДО инициализации карты
     await loadGrimwoodData();
@@ -147,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         state.gold = 0;
         state.crystals = 0;
         state.fighting = false;
-        state.visitedLocations = ["loc_0_0"];
+        state.visitedLocations = ["loc_0_4"];
 
         resetHeroInventory();
 
@@ -182,6 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         ui.writeLog("⚔️ Нажми «В БОЙ»");
 
         mapModule.updatePortalButton();
+        mapModule.updateLocationScene();
     }
 
     openModalButtons.forEach((button) => {
